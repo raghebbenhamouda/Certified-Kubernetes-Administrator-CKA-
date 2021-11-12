@@ -791,7 +791,7 @@ We refer to the target pods on the service with their selector tags
 - [Apply a network addon to the cluster, here WeaveNet (step 2)](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/#steps-for-the-first-control-plane-node)
 - [CNI plugin file locations](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/#usage-summary)
 - [Check DNS resolution from inside a pod](https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/#before-you-begin)
--[Create an ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/?ref=hackernoon.com#create-an-ingress)
+- [Create an ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/?ref=hackernoon.com#create-an-ingress)
 - [Installing kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
 - [Setup cluster from scratch with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node)
 - [JSONPath documentation](https://kubernetes.io/docs/reference/kubectl/jsonpath/)
