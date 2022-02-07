@@ -119,8 +119,9 @@
 ## Namespaces
 - A kubernetes construct that holds elements like deployments and pods
 - All resources in Kubernetes are assigned to a namespace
-- Kubernetes cluster control resources are based on the kube-system namespace
-- user-facing resources are on the kube-public namespace
+- Kubernetes cluster control resources are based on the **kube-system** namespace, to isolate them from the user and to prevent you from accidentally deleting or
+modifying them.
+- user-facing resources(resources that should be available to all users) are on the **kube-public** namespace
 - You can create namespaces for different resource groups, like dev or prod
 - You can assign access rules and resources to each namespace
 - Elements on the same namespace can reach each other by common name, like db-service
@@ -128,7 +129,7 @@
 - You need to specify a namespace to list resources in it, like kubectl `get pods -n kube-system`
 - When you create a resource you specify it in the metadata block
 - You can create a namespace in yaml with an apiVersion, kind and Metadata block
-- you can create resourceQuota resources for a specific namespace like memory usage limitations, pod number and CPU usage
+- you can create r**esourceQuota resources** for a specific namespace like memory usage limitations, pod number and CPU usage
 - The DNS FQDN for inter-namespace communication follows the format [resource name].[namespace].[resource type].[cluster TLD, generally cluster.local]
 
 ## Services
