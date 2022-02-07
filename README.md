@@ -26,9 +26,16 @@
 - Keys are unique
 - Simple and Fast
 - Used for configuration states
-- Runs in the kube-system namespace
+- Runs in the kube-system **(inside the master node)** namespace
 - If run in HA, runs in every master node, you tell it the IP's of all the etcd nodes
-
+### etcd setup
+- **Manual Setup** :
+	- If you setup your cluster from scratch then you deploy ETCD by downloading ETCD Binaries yourself
+	- Installing Binaries and Configuring ETCD as a service in your master node yourself.
+- **Setup Kubeadm** : 
+ 	- If you setup your cluster using kubeadm then kubeadm will deploy etcd server for you as a pod in kube-system namespace.
+ 
+	
 ## kube-api
 - kube-apiserver is the primary management controller in kubernetes
 - kubectl runs api requests against kube-apiserver
@@ -37,10 +44,10 @@
 - if you used kubeadm, it was deployed as a pod with files on /etc/kubernetes/manifests, otherwise it was installed on the system !!![REMIRATE LA CARPETA DONDE VA EN SISTEMA]
 
 ## kube-controller-manager
-- Controllers monitor components and brings them to the desired state
-- node-controller Every 5 seconds it checks heartbeat of a node, after 40 seconds it marks it unreachable, after 5 minutes it removes the pods and provisions them on a healthy node
-- replication-controller monitors the desired number of pods are up and provisions as necessary
-- many kube-controllers, all managed by kube-controller-manager
+- Controllers monitor (through the kube-api server) components and brings them to the desired state
+- **node-controller** Every 5 seconds it checks heartbeat of a node, after 40 seconds it marks it unreachable, after 5 minutes it removes the pods and provisions them on a healthy node
+- **replication-controller** monitors the desired number of pods are up and provisions as necessary
+- many kube-controllers, all managed by **kube-controller-manager**
 - if installed with kubeadm, kube-controller-manager is a pod. Options in /etc/kubernetes/manifests. If not, it is on the process list.
 
 ## kube-scheduler
@@ -59,18 +66,17 @@
 - Every pod can reach every other pod
 - Virtual network spanning all nodes
 - IP's are ephimeral, pods are accessed through services
-- Services are not actual containers or processes, they are only kubernetes abstracts on kubernetes memory
-- kube-proxy is a process on every kubernetes node
-- When a service is created, it creates the rules on each node to forward traffic
+- Services are not actual containers or processes, they are virtual components that live in kubernetes's memory
+- kube-proxy is a process that runs on every kubernetes node, Its job is to look for new services and every time a new service is created it creates the appropriate rules on each node to forward traffic to those services to the backend pods.
 - using iptables rules in all nodes to forward traffic
 - deployed as pods on every node as a daemonset
 
 ## Pods
-- Applications are deployed to worker nodes as containers inside of a Kubernetes object named Pods
+- Applications are deployed to worker nodes as containers inside of a **Kubernetes object** named **Pods**
 - A pod is the smallest object in Kubernetes
-- Every pod is a single instance of an application
+- **Every pod is a single instance of an application**
 - If load needs to be shared, we create a new pod
-- To scale up you add pods, to scale down you delete pods. You do not add containers to your pod.
+- To **scale up** you **add pods**, to **scale down** you **delete pods**. Y**ou do not add containers to your pod**.
 - Pods can be multi-container. Not of the same type usually, but can have helper containers like data processors.
 - Pods can communicate with each other as they share the same network space and storage space
 - When a pod is created or destroyed it affects all of the containers inside the pod.
@@ -89,8 +95,8 @@
 
 ## Replication controllers
 - We need pod replicas so if a pod fails we still have other instances to keep service
-- You need a replication controller even if you have 1 pod
-- The replication controller ensures you have the desired number of pods
+- You need a replication controller even **if you have 1 pod**
+- The replication controller ensures you have the desired number of pods **(High Availability)**
 - Replication Controller is being replaced by ReplicaSets
 - As all kubernetes objects we have apiVersion, kind, metadata and spec
 - Under spec we set a pod template (everything in a pod definition except apiVersion and Kind)
@@ -99,9 +105,10 @@
 
 ## replicaSets
 - Successor to replication controllers
-- Same format as replication controller with different apiVersion and Kind, except a selector field they add.
+- Same format as replication controller with different apiVersion and Kind, **except a selector field** they add.
+- can manage pods that are not created as part as the repllicaset creation(created by other replicasets).
 - it has a matchLabels list of values which matches labels on the pods it will manage
-- The labels serve to add existing pods to the current group, so it knows it doesn't have to create new ones, or maybe it needs to destroy some.
+- The labels serve to add existing pods to the current group, **so it knows it doesn't have to create new ones**, or maybe it needs to destroy some.
 
 ## Deployments
 - Deployments allow for tasks like rolling updates, traffic pausing, rollback of pods...
