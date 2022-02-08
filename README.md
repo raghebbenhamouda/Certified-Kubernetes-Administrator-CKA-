@@ -145,8 +145,8 @@ modifying them.
 ### Services: NodePort
 - You can have multiple port mappings within a single service
 - Part of the spec is selector, which links the service to the target pod based on tags
-- In a production environment you need to load balance between multiple pods, which the Service does based on the pod tags. It distributes the load randomly, but preferring to keep sessions on a single pod
-- The service is created in all the nodes, so when the pod moves, you can still access it
+- In a production environment you need to load balance between **multiple pods**, which the Service does based on the pod tags. It distributes the **load randomly**, but preferring to **keep sessions on a single pod**
+- The service is created in **all the nodes**, so when the pod moves, you can still access it
 
 ### Services: ClusterIP
 - Pod IP's are temporary, you cannot rely on them for internal communication
