@@ -174,9 +174,9 @@ We refer to the target pods on the service with their selector tags
 - There is automatic scheduling and manual scheduling
 
 ## Manual scheduling
-- If there is no scheduler and no node is manually assigned (nodeName value on the pod spec), pods stay pending
+- If there is no scheduler and no node is manually assigned (`nodeName value on the pod spec`), pods stay pending
 - You cannot modify a pod to send them to a node
-- You can send an existing pod to a node through a binding or by manually setting scheduling info like nodeName
+- You can send an existing pod to a node through a **binding object** or by manually setting scheduling info like `nodeName`
 
 ## Labels and selectors
 - Tools used to group resources together to be able to filter and act on them together
@@ -195,17 +195,17 @@ We refer to the target pods on the service with their selector tags
 - Tolerant resources can land on a node that matches the tolerations
 - Both have to be applied to get certain requirements: if you want a node to be for only one application, you apply a taint for any pod, and add a toleration for a specific pod declaration
 - On the last example only that tolerated pod can land in that node, the rest of the pods will not go to that node based on the scheduler rules
-- This restricts pods from landing on a tainted node, but does not guarantee that a tolerated pod will land on the tainted node
+- This restricts pods from landing on a tainted node, **but does not guarantee that a tolerated pod will land on the tainted node**
 
 ### Taints
-- Taints are set on nodes, for example with `kubectl taint nodes node-01 app=nginx-app:{NoSchedule|PreferNoSchedule|NoExecute}`
+- **Taints are set on nodes**, for example with `kubectl taint nodes node-01 app=nginx-app:{NoSchedule|PreferNoSchedule|NoExecute}`
 - NoSchedule avoids new non-tolerant pods getting to the node, but lets the existing ones stay
 - PreferNoSchedule will try not to schedule pods to the node, but has the chance to do it in case it needs to
-- NoExecute will not schedule new non-tolerant pods on that node and will also evict the current ones that don't match the toleration rule
-- A taint is set up on the master node so it doesn't run any worker pods, so it can focus its work on cluster management
+- NoExecute will not schedule new non-tolerant pods on that node and will also evict(kill) the current ones that don't match the toleration rule
+- **A taint is set up on the master node so it doesn't run any worker pods, so it can focus its work on cluster management**
 
 ### Tolerations
-- Tolerations are set on pods
+- **Tolerations are set on pods**
 - Add a section to spec named `tolerations`
 - This section has four key-value pairs: `key`, `operator`, `value` and `effect`
 - The values all need to be encased in double quotes
@@ -236,7 +236,7 @@ We refer to the target pods on the service with their selector tags
 - A pod consumes a given amount of resources from a node
 - The scheduler places the pods where sufficient resources are available
 - If there are insufficient resources pods will not be scheduled
-- Containers have requests (the amount of resources it wants at minimum to dedicate) and the limits (how many resources can a pod consume before it gets evicted)
+- Containers have **requests** (the amount of resources it wants at minimum to dedicate) and the limits (how many resources can a pod consume before it gets evicted)
 - This is set under the container spec of a pod, as a resources block and a limits block
 - we can specify both CPU and memory usage
 - If a container tries to use more CPU than its limit, it will be throttled
@@ -253,10 +253,10 @@ We refer to the target pods on the service with their selector tags
 ## Satic pods
 - Apart from contacting the kubernetes api, the kubelet also reads manifests from /etc/kubernetes/manifests/
 - This is independent from the rest of the cluster
-- This only allows you to create pods. Not replica sets, or deployments for example. The kubelet works at a pod level and can only create pods
-- You can see the pods or containers with ddocker ps. We do not have access to the kubectl command, as we do not have cluster access in this situation.
+- This **only allows you to create pods**. Not replica sets, or deployments for example. The kubelet works at a pod level and can only create pods
+- You can see the pods or containers with `docker ps`. We do not have access to the kubectl command, as we do not have cluster access in this situation.
 - The kubelet can create both kubeapi-server and static pods at the same time
-- the kubeapi-server will see static pods as other pods in the cluster, but will not be able to interact with them
+- **the kubeapi-server will see static pods as other pods in the cluster, but will not be able to interact with them**
 - Static pods are useful for tasks like setting up the control plane like etcd, apiserver or controller manager
 - This is how kubeadm sets up a cluster, as static pods
 - Static pods usually have the node name at the end of their pod name. This can help you identify static pods!
