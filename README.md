@@ -287,46 +287,47 @@ We refer to the target pods on the service with their selector tags
 - One Metrics Server per cluster
 - in-memory metrics solution, without historical data
 - third-party solutions like Prometheus
-- cAdvisor inside the kubelet monitors pods and sends the metrics to the Metrics Server
+- **cAdvisor** inside the kubelet monitors pods and sends the metrics to the Metrics Server
 - You can view the info with `kubectl top node` or `kubectl top pods`
 
 ## Logging
 - Pods generate logs that get stored for a container
 - You can view the logs with `kubectl logs [pod name]`
-- If there are several containers, specify the container with `kubectl logs [pod name] -c [container name]`
+- If there are **several containers inside the pod**, specify the container with `kubectl logs [pod name] -c [container name]`
 
 # Application Lifecycle Management
 
 ## Rolling updates and rollbacks
 - When you create a deployment it triggers a rollout
-- When the deployment changes, a new rollout starts
+- When the deployment changes, a new rollout(pods with the new version) starts
 - That deployment change creates a deployment revision
 - You can see the status of a rollout with `kubectl status rollout deployment/[deployment name]`
+-  You can see the history of a rollout with `kubectl history rollout deployment/[deployment name]`
 - The new versions of pod instances are created one by one, replacing an old one every time
 - This allows us to rollout an update without interrupting service
-- The two ways of deployment are Recreate and RollingUpdate. Recreate means a downtime taking down everything at once, RollingUpdate avoids downtime (the default)
+- The two ways of deployment are **Recreate** and **RollingUpdate**. Recreate means a downtime taking down everything at once, RollingUpdate avoids downtime (the default)
 - You can undo changes of a rollout with `kubectl rollout undo deployment/[deployment name]`
 
 ## Configure docker applications
 - Containers are supposed to run a specific task
 - When that task is done, the container stops
 - We can specify what task a container has to run in its configuration declaration
-- CMD docker commands always run the same, but ENTRYPOINT gets command line parameters from an execution
+- CMD docker commands always run the same, but ENTRYPOINT gets command line parameters from an execution and it runs when the container starts
 - you can combine both for a default value execution if no values are specified
-- You can override with the --entrypoint docker directive
+- You can override the entrypoint command that is inside the dockerfile with the --entrypoint docker argument
 
 ## Commands and arguments for pods
-- You can use the args option on the pod definition file on the spec for it to pass values to the pod startup container
-- you can also override the entrypoint with the command directive in the same block
+- You can use the **args** option on the pod definition file on the spec for it to pass values to the pod startup container
+- you can also override the entrypoint with the **command** directive in the same block
 
 ## Environment variables
 - We can use the env array property on a pod definition spec to pass environment variables to a container
 - We use this for ConfigMaps and Secrets too, with a reference to where the value comes from
 
 ## ConfigMaps
-- ConfigMaps are groups of key-value pairs that we inject into pods as environment variables
+- ConfigMaps are groups of **key-value pairs** that we inject into pods as environment variables
 - They can be created both declaratively or imperatively
-- After creating a ConfigMap we pass it to a pod with the spec object envFrom as a configMapRef
+- After creating a ConfigMap we pass it to a pod with the spec `object envFrom` as a `configMapRef`
 - We can pass multiple ConfigMaps to a single pod
 - We can also add an entire ConfigMap as environment variables for a pod, not just one by one
 - ConfigMaps can also be attached as volumes
@@ -348,7 +349,7 @@ We refer to the target pods on the service with their selector tags
 ## InitContainers
 - Sometimes we need a container in a pod to just run a task and stop on boot time
 - This is done by InitContainers
-- InitContainers run sequentially when a pod starts
+- InitContainers **run sequentially** when a pod starts
 - If InitContainers fail, the pod will restart the creation process
 - These are declared under the initContainers array on the pod spec, alongside the Containers array
 
@@ -357,26 +358,26 @@ We refer to the target pods on the service with their selector tags
 ## Operating system upgrade
 - Sometimes you need to take nodes out of the cluster to perform maintenance
 - Depending on how we deploy the pods, pulling down a node could affect service
-- If a node is down more than 5 minutes, pods on a node are considered down and will be recreated as they will be evicted
+- If a node is down **more than 5 minutes**, pods on a node are considered down and will be recreated as they will **be evicted**
 - When the cluster comes back up, it will come back up empty and ready to schedule new pods
-- To be sure that we will not lose service, we drain the workloads from the node before removing it from the cluster (cordon and drain the node)
-- Cordon will not allow new pods to schedule into that node
-- Drain will remove the current pods on that node
+- To be sure that we will not lose service, we drain(move all the pod to other nodes in the cluster) the workloads from the node before removing it from the cluster (cordon and drain the node)
+- **Cordon** will not allow new pods to schedule into that node
+- **Drain** will remove the current pods on that node **and cordon it**
 - When the node is back up, we need to uncordon it so it can get pods scheduled to it
 - Nodes cannot be drained if they are running pods noot managed by a daemonset, replicaset, etc, which would be lost on a drain eviction. Forcing is possible, but not recommended
 
 ## Cluster upgrade
 - It is not mandatory that all kubernetes components are all the same version
-- Elements cannot be at a newer version than the kube-apiserver
-- controller-manager and kube-scheduler can be 1 version behind
-- kubelet and kube-proxy can be 2 versions behind
-- kubectl can be one version over or under
+- Elements cannot be at a **newer** version than the** kube-apiserver**
+- **controller-manager** and **kube-scheduler** can be **1 version behind**
+- **kubelet** and **kube-proxy** can be **2 versions behind**
+- **kubectl** can be one version **over** or **under**
 - This allows us to upgrade the cluster by parts without interrupting service
-- 3 versions are supported at a time: the current version and the two earlier ones
-- The recommended approach is upgrading one version at a time
+- 3 versions are supported at a time by kubernetes: **the current version and the two earlier ones**
+- The recommended approach is upgrading **one version at a time**
 - We can upgrade the cluster with `kubeadm upgrade [plan/apply]`
 - First we upgrade the master nodes, then we upgrade the workers
-- While the master is down for upgrades, the cluster is still running workloads on worker nodes, we just can't make changes
+- While the master is down for upgrades, the cluster is still running workloads on worker nodes, we just can't make changes(we can't use kubectl)
 - When the master is upgraded we can upgrade workers one by one so we keep service unaffected
 - We can also add new, already upgraded nodes to the cluster and cordon the old ones, move the workloads to the new nodes and remove the old nodes
 - remember the kubelet runs on each node, so you need to ssh into the node to upgrade it
@@ -385,7 +386,7 @@ We refer to the target pods on the service with their selector tags
 ## Backup and restore
 - You need to back up your cluster in terms of service configuration, etcd state and persistent volumes
 - Save a copy of the resource configuration files in something like github
-- You can use `kubectl get all -A -o yaml` and save the output to a file as backup
+- You can use(query the kube-api server) `kubectl get all -A -o yaml` and save the output to a file as backup
 - You also have third party solutions like Velero
 - Backing up etcd is necessary to keep track of the state of the kubernetes cluster
 - You can back up the etcd database folder on your master node
