@@ -396,33 +396,35 @@ We refer to the target pods on the service with their selector tags
 
 ## Security primitives
 - First step is securing the cluster infrastructure, like node access only with passwordless authentication
-- First line of defense at a cluster level is securing the kube-apiserver
-- Defined by the authentication mechanisms: usernames and passwords, tokens, certificates and service accounts
-- After that, authroization levels are defined so authenticated users have limited permissions
-- All communication between the cluster components is secured with TLS
-- By default all pods can access all other pods, this is avoided with network policies
+- **First line of defense** at a cluster level is **securing the kube-apiserver**
+- **1- Who can access:** Defined by the authentication mechanisms: **usernames and passwords**, **usernames and tokens**, **certificates** and service accounts
+- **2- What can they do:** After that, authroization levels are defined so authenticated users **(Role based control...)** have limited permissions
+- All communication between the cluster components and the kube-apiserver is **secured with TLS**
+- By default all pods can access all other pods, we can restict access between them using **network policies**
 
 ## Authentication
 - This focuses on how users access the cluster itself
 - This has 2 main areas, users like administrator and developers, and robots like processes, services and applications
-- Kubernetes does not natively manage user accounts, it uses external tools like certificates or login systems like LDAP
-- Kubernetes does manage applicacion access with Service Accounts
-- All user access is managed by the kube-apiserver
-- Users access the cluster using static passswords or token files, certificates, or through external identity services like LDAP
+- **Kubernetes does not natively manage user accounts**, it uses external tools like **certificates** or **login systems like LDAP**
+- **Kubernetes does manage applicacion access with Service Accounts**
+- **All user access is managed by the kube-apiserver**
+- Users access the cluster using static passswords or token **files**, certificates, or through external identity services like LDAP
 
 ### Password or token-based authentication
 - Deprecated in Kubernetes 1.19
 - The first option is creating a csv file with users and passing it as an option to the kube-apiserver for basic authentication
 - To authenticate to the cluster when making an API call pass the user and password to the request and the cluster will answer with the response
 - The same format is used for token-based authentication
-- This authentication system is not recommended as it is unencrypted and static
+- **This authentication system is not recommended as it is unencrypted and static**
 
 ### Certificate-based authentication
+- Certificates with public key are named **.crt** or **.pem**
+- Private keys are usually with extension **.key** or **-key.pem**
 - All communication within the cluster and with the user is done through TLS
 - Each cluster component has its own key pair: kube-apiserver, etcdserver, kubelet
 - Each user needs its own certificate pair to access the kube-apiserver through tkubectl. Same for kube-scheduler, kube-controller manager and kube-proxy, which act just like a client
 - You need a Certificate Authority for the cluster, which has its own key pair to sign other certificates
-- Generating certificates is done with tools like EasyRSA, OpenSSL or CFSSL
+- Generating certificates is done with tools like **EasyRSA**, **OpenSSL** or **CFSSL**
 - Getting a certificate has 3 steps: generating the certificate, generating a signing request, and signing the certificate
 - Add values to the CSR to add the user certificate to certain groups, like the administrators group
 - You can add these certificates to a Kubeconfig file to avoid passing them as values to every request
