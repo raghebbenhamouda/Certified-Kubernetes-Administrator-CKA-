@@ -425,7 +425,10 @@ We refer to the target pods on the service with their selector tags
 - Each user needs its own certificate pair to access the kube-apiserver through tkubectl. Same for kube-scheduler, kube-controller manager and kube-proxy, which act just like a client
 - You need a Certificate Authority for the cluster, which has its own key pair to sign other certificates
 - Generating certificates is done with tools like **EasyRSA**, **OpenSSL** or **CFSSL**
-- Getting a certificate has 3 steps: generating the certificate, generating a signing request, and signing the certificate
+- Getting a certificate has 3 steps: 
+	- **1:** generating the certificat(generating a private key)
+	- **2:** generating a signing request(using the private key)
+	-  **3:** signing the certificate
 - Add values to the CSR to add the user certificate to certain groups, like the administrators group
 - You can add these certificates to a Kubeconfig file to avoid passing them as values to every request
 - Any user requests go through the kube-apiserver and need to authenticate against it
