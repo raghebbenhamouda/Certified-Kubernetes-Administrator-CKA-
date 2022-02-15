@@ -455,14 +455,14 @@ We refer to the target pods on the service with their selector tags
 - **Context** gets the last 2 together, specifying which users can you use on which clusters
 - You can view your kubeconfig file with `kubectl config view`
 - You can specify which kubeconfig file to use when running a kubectl command
-- You can use kubectl config use-context [context name] to change between cluster contexts
+- You can use `kubectl config use-context [context name]` to change between cluster contexts
 - You can configure kubectl to switch to a specific namespace inside of a context when switched
 - Certificates can be specified either as a file path or as a base64 data string
 
 ## API groups
 - Kubernetes API endpoints are grouped as tasks, like metrics, health and logs
-- Separated in the core and named groups
-- Core controls namespaces, nodes, persistent volumes, pods...
+- Separated in the core **(/api/v1)** and named groups **(/apis)**
+- Core controls namespaces, nodes, persistent volumes, pods...![Alt text](api.png "Optional title")
 - Named controls apps, extensions, networking, storage, authentication...
 - Each resource has a set of actions that we can perform
 - Accessing the API requires authentication and authorization to the resources
