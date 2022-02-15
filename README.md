@@ -440,18 +440,20 @@ We refer to the target pods on the service with their selector tags
 - Whoever has access to the CA files has access to creating certificates for the cluster
 - These files should be very well protected. They are usually on the master node
 - To avoid doing this manually Kubernetes has a certificate signing API to renew them through the API with kubectl commands
+- You send a CSR directly to kubernetes, When the administrator receives a CSR instead of logging onto the master node and signing the certificate
+- The admin creates a Kubernetes API object called **CSR**
 - This CSR is created on the cluster as an object using a yaml manifest
 - Administrators can see kubernetes csr's and can approve them or deny them as needed
 - This generated certificate can then be retrieved from the resulting certificate object's yaml
-- All certificate-related tasks are handled by the kube-controller manager
+- All certificate-related tasks are handled by the **kube-controller manager(It has controllers in it called as csr-approving, csr-signing) **
 
 ## KubeConfig
 - KubeConfig files are used to authenticate against a specific Kubernetes cluster
 - This file is stored in a yaml format with 3 sections: clusters, contexts and users
-- Clusters specifies the kubernetes clusters that the kubeconfig file knows about
-- Users specifies the users you can use
-- Context gets the last 2 together, specifying which users can you use on which clusters
-- You can view your kubeconfig file with kubectl config view
+- **Clusters** specifies the kubernetes clusters that the kubeconfig file knows about
+- **Users** specifies the users you can use
+- **Context** gets the last 2 together, specifying which users can you use on which clusters
+- You can view your kubeconfig file with `kubectl config view`
 - You can specify which kubeconfig file to use when running a kubectl command
 - You can use kubectl config use-context [context name] to change between cluster contexts
 - You can configure kubectl to switch to a specific namespace inside of a context when switched
