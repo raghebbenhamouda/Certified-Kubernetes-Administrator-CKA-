@@ -471,13 +471,13 @@ We refer to the target pods on the service with their selector tags
 ## Authorization
 - Once a user has access to a cluster through authentication, we control authorization by specifying what that user can do
 - An example is not allowing a developer to delete nodes on a cluster
-- Kubernetes supports several authentication mechanisms: Node, ABAC, RBAC and Webhooks
-- Node-based authorization allows privileges for the Kubelet to work on its resources
-- ABAC is attribute-based authoritzation, which allows a certain user to use a set of permissions defined by a policy. This is done for each user or group, and each time we make changes to it we need to restart the kube-apiserver
-- RBAC associates permissions to a specific role and we assign the users and groups to the role, and when a role is modified it is immediately applied to all users associated to it
-- Webhook allows external authorization management with third party tools like OpenPolicyAgent
+- Kubernetes supports several authentication mechanisms: Node, ABAC(Attribute based authorization), RBAC(RoleBAC) and Webhooks
+- **Node-based authorization** allows privileges for the Kubelet to work on its resources
+- **ABAC is attribute-based authoritzation**, which allows a certain user to use a set of permissions defined by a policy. This is done for each user or group, and each time we make changes to it we need to restart the kube-apiserver
+- **RBAC** associates permissions to a specific role and we assign the users and groups to the role, and when a role is modified it is immediately applied to all users associated to it
+- **Webhook** allows external authorization management with third party tools like OpenPolicyAgent
 - If not specified Kubernetes is set to always allow requests
-- On the kube-apiserver configuration file we specify a list of authorization managers, and a request will follow them in order. If a request is denied, it jumps to the next authorization validator in the chain
+- **On the kube-apiserver configuration file we specify a list of authorization managers, and a request will follow them in order. If a request is denied, it jumps to the next authorization validator in the chain**
 
 ## Role-Based Access controls
 - Roles are objects defined in Kubernetes
@@ -489,12 +489,12 @@ We refer to the target pods on the service with their selector tags
 ## Roles and RoleBindings
 - After creating the role, we link a user or group to a role with a RoleBinding object
 - On a RoleBinding we specify the user or group as a subject or subjects in a list, and the roleRef referencing what role they will be linked to
-- RoleBindings are scoped to the namespace where the roleBinding is created
-- you can list these with kubectl get roles and kubectl get rolebindings
+- **RoleBindings are scoped to the namespace where the roleBinding is created**
+- you can list these with `kubectl get roles` and kubectl get rolebindings
 - You can also describe roles and rolebindings to get more information
-- You can use kubectl auth can-i [command] to check if you have permissions to run tasks, like kubectl auth can-i create deployments
-- Administrators can impersonate other users to check permissions by adding --as [user] to the command above
-- You can give users access to specific resources rather than entire resource lists, like only allowing read access to a pod named nginx-ingress
+- You can use `kubectl auth can-i [command]` to check if you have permissions to run tasks, like kubectl auth can-i create deployments
+- Administrators can impersonate other users to check permissions by adding `--as [user]` to the command above
+- You can give users access **to specific resources rather than entire resource lists**, like only allowing read access to a pod named nginx-ingress by adding `resourceNames` Field
 
 ## ClusterRoles and ClusterRoleBindings
 - As opposed to Roles and RoleBindings, these are cluster-wide and can refer to resources without a namespace, like cluster nodes
