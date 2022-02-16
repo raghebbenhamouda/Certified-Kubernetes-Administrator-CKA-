@@ -500,9 +500,10 @@ We refer to the target pods on the service with their selector tags
 - As opposed to Roles and RoleBindings, these are cluster-wide and can refer to resources without a namespace, like cluster nodes
 - Resources are either namespaced or cluster-scoped
 - Example of cluster scoped resources are nodes, persistent volumes, namespaces or certificate signing requests
-- A cluster admin can add and delete nodes
+- A cluster role  admin can be created can add and delete nodes
 - A storage admin can add and delete storage volumes and volume claims
 - The process is the same as earlier: we create a clusterRole and assign users to it with a ClusterRoleBinding
+- We can create a clusterole for **namespace** resources also, but the user will have access to these resources across **all namespaces**.
 
 ## Service accounts
 - Kubernetes has 2 types of accounts: User and Service accounts
@@ -510,13 +511,15 @@ We refer to the target pods on the service with their selector tags
 - Service accounts are for programs to access API resources like prometheus pulling performance metrics from the Kubernetes API
 - ServiceAccounts use a token to access the cluster
 - The token is created when the ServiceAccount is created and is stored as a secret
-- Secrets for ServiceAccounts can be automatically mounted into pods to be used by applications
-- Each namespace has its default service account
+- Secrets for ServiceAccounts can be automatically mounted into pods to be used by applications **if the application is hosted on the k8s cluster**
+- Each namespace has its default service account named **default**
+- When a pod is created, The **default service account** and its **token** **are automatically mounted to that pod as a volume mount**
+- The default service account is **restricted**, It only has permission to run **basic common API queries**.
 
 ## Securing image
-- By default Kubernetes pulls images from the docker registry
+- By default Kubernetes pulls images from the docker registry(Example: **Image: nginx** is in fact **image: docker.io/library/nginx** where library can be replaced with the docker user account)
 - We can also use a private registry to pull images from as you may want to make your images private
-- Kubernetes has a special secret type named docker-registry which allows kubernetes to pull images from private registries
+- Kubernetes has a special **secret type named docker-registry** which allows kubernetes to pull images from private registries
 - This needs to be attached to the pod as imagePullSecret so it can pull images from the private registry for that pod
 
 ## Security contexts
@@ -531,7 +534,7 @@ We refer to the target pods on the service with their selector tags
 - By default all pods in the cluster can communicate with any other pod
 - Network policies are objects in Kubernetes that limit network access to and from pods
 - Network policies are attached to one or more pods
-- We link network policies to pods based on labels
+- We link network policies to pods based on **labels**
 - first we specify the ingress rule on the network policy
 - When the network policy is created we tag the pod in a way that it will link the policy to the pod
 - Network policies are enforced by your networking provider in the cluster
@@ -539,6 +542,18 @@ We refer to the target pods on the service with their selector tags
 - You can still create network policies even if they are not applied but your network provider
 
 # Storage
+
+## Container Runtime Interface(CRI)
+- The container runtime interface is a standard that defines how an orchestration solution like k8s would communicate with container run times like Docker.
+-If any new container runtime interface is developed, they can simply follow the CRI standards.
+
+## Container Networking Interface(CNI)
+- The container networking interface was introduced, to extend support for different networking solutions
+
+## Container Storage Interface(CSI)
+- The container storage interface was developed to support multiple storage solutions
+- It allows any container orchestration tool to work with any storage vendor(Amazon EBS)
+
 
 ## Volumes in Kubernetes
 - Docker containers do not have persistent storage by default
