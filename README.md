@@ -559,20 +559,22 @@ We refer to the target pods on the service with their selector tags
 - Docker containers do not have persistent storage by default
 - If persistent storage is attached, we can persist data between containers
 - Same applies to Kubernetes pods
-- We create a volume and mount this volume to the container to store data and make it persistent
+- We create a volume(inside a node) and mount this volume to the container to store data and make it persistent
 - Kubernetes supports several external distributed storage solution like EBS, CEPH or S3
 - Availability depends on where you build your cluster
 
 ## Persistent volumes
 - With volumes, each user needs to configure the storage on the pod definition
 - To make storage changes a user would need to recreate the pods
+- A persistent volume is a cluster wide pool of storage **volumes** configured by an administrator to be used by users deploying applications on the Cluster
 - PersistentVolumes allow us to create a large storage volume and let users claim blocks of this storage to use with persistent volume claims
 - First we generate a persistent volume with a yaml file specifying name, access mode, capacity and storage type
 
 ## Persistent volume claims
 - After we have created a persistent volume we need a persistent volume claim to match this storage request with a persistent volume
-- Every persistent volume claim matches a single persistent volume
-- A persistent volume cannot have 2 persistent volume claims, it is a 1 to 1 relationship
+- **Every persistent volume claim matches a single persistent volume**
+- A persistent volume cannot have 2 persistent volume claims, **it is a 1 to 1 relationship**(No other claims can utilize the remaining capacity in the PV)
+- If there are no PV available the PVC will remain in a **pending** state until newer PV are available to the cluster
 - After deleting a persistent volume claim, by default, a persistent volume will stay unless deleted by an administrator, and stays unavailable to use
 - We can configure it to clear the data and make the persistent volume available again if the persistent volume is deleted
 
