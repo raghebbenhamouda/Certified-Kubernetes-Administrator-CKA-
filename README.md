@@ -594,7 +594,7 @@ We refer to the target pods on the service with their selector tags
 - `ip route`: to view the routing table
 - `ip route add 192.168.1.0/24 via 192.168.2.1`: to add entries into the routing table.
 - `cat /proc/sys/net/ipv4/ip_forward`:  check if IP forwarding is enabled on a host( Example: eth0 forward to eth1)
-**PS**: change made using these commands are **only valid till a restart**. If you want to persist these changes you must set them in the /etc/network/interfaces file
+- **PS**: change made using these commands are **only valid till a restart**. If you want to persist these changes you must set them in the /etc/network/interfaces file
 
 ## Network namespaces
 - Used to implement network isolation between elements like containers 
@@ -603,8 +603,13 @@ We refer to the target pods on the service with their selector tags
 - There is a parent process able to see information in all namespaces
 - Every host in a namespace has its own routing table and ARP table, independent from the parent host
 - Interfaces are different for every network namespace. We have a loopback interface for each network namespace
-- We can connect two network namespaces with a virtual connection to which we will assign IP addresses
-- We can also create virtual elements like switches to connect interfaces on different namespaces
+- We can connect two network namespaces with a virtual connection(virtual ethernet cable with tow interfaces) to which we will assign IP addresses
+- We can also create virtual elements like Vswitches(an interface for the host and a switch for the namespace.) to connect interfaces on different namespaces
+- `ip netns add`: to creat a network namespace
+- `ip -n blue link `: list interfaces that belong to **blue namespace**
+- `ip link add veth-red type veth peer name veth-blue`: to create the **cable(virtual connection)** 
+- `ip link set veth-red netns red` : attach each interface to the appropriate namespace
+- `ip addr -n red add 192.168.15.1 dev veth-red`: to assign ip to a namespace(red)
 
 ## Docker networking
 - Docker containers have their own network namespace
