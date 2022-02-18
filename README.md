@@ -587,6 +587,15 @@ We refer to the target pods on the service with their selector tags
 
 # Networking
 
+## Switching and Routing
+- `ip link`: list and modify interfaces on the host
+- `ip addr`: show the ip addresses assigned to those interfaces
+- `ip addr add 192.168.1.10/24 dev eth0 `: to set IP addresses on the interfaces.
+- `ip route`: to view the routing table
+- `ip route add 192.168.1.0/24 via 192.168.2.1`: to add entries into the routing table.
+- `cat /proc/sys/net/ipv4/ip_forward`:  check if IP forwarding is enabled on a host( Example: eth0 forward to eth1)
+**PS**: change made using these commands are **only valid till a restart**. If you want to persist these changes you must set them in the /etc/network/interfaces file
+
 ## Network namespaces
 - Used to implement network isolation between elements like containers 
 - A network namespace cannot see what happens in other namespaces unless configured
