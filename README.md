@@ -598,13 +598,13 @@ We refer to the target pods on the service with their selector tags
 
 ## Network namespaces
 - Used to implement network isolation between elements like containers 
-- A network namespace cannot see what happens in other namespaces unless configured
+- A network namespace cannot see what happens in other namespaces unless configured, it  can have its own virtual interfaces, routing and other tables.
 - We can connect different namespaces if we want to
 - There is a parent process able to see information in all namespaces
 - Every host in a namespace has its own routing table and ARP table, independent from the parent host
 - Interfaces are different for every network namespace. We have a loopback interface for each network namespace
 - We can connect two network namespaces with a virtual connection(virtual ethernet cable with tow interfaces) to which we will assign IP addresses
-- We can also create virtual elements like Vswitches(an interface for the host and a switch for the namespace.) to connect interfaces on different namespaces
+- We can also create virtual elements like Vswitches(an interface for the host and a switch for the namespace) to connect interfaces on different namespaces
 - `ip netns add`: to creat a network namespace
 - `ip -n blue link `: list interfaces that belong to **blue namespace**
 - `ip link add veth-red type veth peer name veth-blue`: to create the **cable(virtual connection)** 
@@ -612,20 +612,22 @@ We refer to the target pods on the service with their selector tags
 - `ip addr -n red add 192.168.15.1 dev veth-red`: to assign ip to a namespace(red)
 
 ## Docker networking
-- Docker containers have their own network namespace
+- Docker containers have their own network namespace(one network namespace for each container)
 - We have many options for docker networking: no networking, use the host network, or create your own internal network bridge to get a private network inside the system
 - When a container in a new network is created, a bridge network namespace is created on the host
 - We can map host ports to container ports to make program available from outside the docker host
 
 ## Container Networking Interface
+- Kubernetes creates a **network** that connects all the nodes together
 - CNI defines the rules a networking provider needs to support in terms of API calls to standardize interaction with any container management tool that supports the CNI standard
 - This middle layer allows any supported network manager to work with any supported container management software interchangeably
 - CNI specifies a set of tasks a networking plugin has to support when interacting with the CNI API
 - Docker does not support CNI, it follows its own standard, and thus external network plugins like Flannel do not work with Docker
-- Kubernetes with docker creates containers without networking, then manually adds the networking rules
+- Kubernetes with docker creates containers without networking, It then invokes the configured CNI plugins who takes care of the rest of the configuration
 
 ## Cluster networking
-- The master node on a cluster needs to accept requests on port 6443
+- Each node must have at least 1 interface connected to a network. Each interface must have an address configured.
+- The master node on a cluster needs to accept requests for the api-server on port 6443
 - Any node that's running a kubelet needs to allow connections to port 10250
 - Additionally the master needs to allow access to port 10251 and 10252 for kube-scheduler and kube-controllermanager respectively
 - Worker nodes require ports 30000-32767 for services to be open
@@ -640,6 +642,13 @@ We refer to the target pods on the service with their selector tags
 
 ## Container Networking Interface in Kubernetes
 - Networking in Kubernetes is managed by a CNI plugin
+- When a container is cretead:
+	- 1: **Container Runtime must create network namespace**
+	- 2: **Identify network the container must attach to**
+ 	- 3: **Container Runtime to invoke Network Plugin (bridge) when container is ADDed.**
+ 	- 4: **Container Runtime to invoke Network Plugin (bridge) when container is DELeted.**
+	- 5: **JSON format of the Network Configuration**
+
 - This CNI plugin is configured in the Kubelet configuration file for each node
 - We can see these options by seeing the configuration of the kubelet service
 
@@ -653,15 +662,20 @@ We refer to the target pods on the service with their selector tags
 
 ## IP address management in Kubernetes
 - The CNI plugin is responsible for assigning IP addresses to pods
-- CNI handles this with the host-local plugin
+- CNI handles this with the host-local plugin(get-free-ip-from-host)
 - WeaveWorks handles this transparently for us
 
 ## Service networking
 - Until now we have talked about networking between individual pods
 - We usually want to use a service to access a set of pods
-- A service is accessible across the cluster by any other resource using a ClusterIP
-- We can also export the service externally with NodePort
-- Every time a pod is created the CNI makes the network changes necessary and kube-proxy communicates the changes to the rest of the cluster nodes
+- Service is just a virtual object
+- A service is accessible across the cluster(not bound to a specific node) by any other resource using a ClusterIP
+- We can also export the service externally with NodePort(exposes the application on a port on all nodes in the cluster that external users or applications have access to)
+- Each node runs a Kube-proxy component. Kube-proxy watches the changes in the cluster through the api-server and every time a new service is created, Kube-proxy
+gets into action
+- Every time a pod is created the kublete invokes the CNI to make the necessary network changes and kube-proxy communicates the changes to the rest of the cluster nodes
+- When created a service object is assigned an IP address from a predefined range, the Kube-proxy components running on each node gets that IP address and creates forwarding rules on each node in the cluster,  any traffic coming to this IP(the IP of the service) should go to the IP of the pod.
+- the kube-proxy component creates and deletes these rules.
 - NodePort is a combination of IP and port to forward to a correct pod
 - kube-proxy works using iptables by default
 - You can list iptables rules on a node and check its configuration, as all rules have a comment on what they do
@@ -674,6 +688,7 @@ We refer to the target pods on the service with their selector tags
 - Services get grouped using an svc domain block, https://service-name.namespace.svc
 - Fully-qualified fomain names are grouped under a top-level domain, cluster.local by default, which we can refer to as https://service-name.namespace.svc.cluster.local
 - We can do the same for pods, but using the IP with dashes as a name and changing svc for pod
+- DNS records for PODs are not created by default. But we can enable that explicitly
 
 ## CoreDNS
 - In-cluster DNS is managed by CoreDNS, a central DNS server in the cluster
@@ -681,10 +696,10 @@ We refer to the target pods on the service with their selector tags
 - When a pod is created, an entry is added to CoreDNS for resolution using its IP
 - For services it uses the service name
 - Deployed as 2 pods for fault toleration
-- CoreDNS uses a configuration file named Corefile, under /etc/coredns by default
+- CoreDNS uses a configuration file named Corefile, under `/etc/coredns by default`
 - The pod records are disabled by default, can be enabled by adding `pods insecure` to the kubernetes configuration block in the Corefile
 - CoreDNS watches for changes in the cluster and adds or deletes DNS entries accordingly
-- exposed through the kube-dns service
+- **exposed through the kube-dns service, the ip addr of this service is configured as the nameserver on pods**
 - The information about the DNS server cluster IP and top-level domain is stored in the Kubelet configuration in the worker nodes
 - services can answer DNS queries by just using their service name. Pods require the fully qualified domain name
  
