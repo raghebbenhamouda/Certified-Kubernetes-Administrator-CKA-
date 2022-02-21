@@ -707,10 +707,13 @@ gets into action
 - Service NodePorts require us to use a port over 35000 that has to be in the URL unless you use a proxy
 - If we are on a cloud provider we can use a LoadBalancer type Service, which allows the requests to enter through a cloud load balancer that handles routing
 - If we add more services, we need more load balancers, which can get expensive, and configuring SSL gets complicated
-- Ingresses are scalable layer 7 load balancers that are native to Kubernetes
-- Still needs to be exposed through a cloud load balancer, but after that all configuration lives in Kubernetes
+- Ingress helps users access application using a single Externally accessible URL, that you can configure to route to different services within your cluster
+based on the URL path, At the same time implement SSL security as well.
+- Ingresses are **scalable layer 7 load balancers** that are native to Kubernetes
+- Still needs to be exposed through a cloud load balancer or through a nodePort, but after that all configuration lives in Kubernetes
 - We deploy an ingress controller (nginx, haproxy, traefik), and ingress resources (routing rules)
 - Ingress controllers have intelligence built in to detect new rules and resources automatically
+- We do not have an Ingress Controller on Kubernetes by default. So we must deploy one like : GCE(Google layer 7 LB), Nginx..
 - A special build of nginx is used for the nginx ingress controller
 - Settings are stored inside a configmap
 - We need to provice the namespace, name and ports that the ingress controller will use
