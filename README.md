@@ -712,7 +712,7 @@ based on the URL path, At the same time implement SSL security as well.
 - Ingresses are **scalable layer 7 load balancers** that are native to Kubernetes
 - Still needs to be exposed through a cloud load balancer or through a nodePort, but after that all configuration lives in Kubernetes
 - We deploy an ingress controller (nginx, haproxy, traefik), and ingress resources (routing rules)
-- Ingress controllers have intelligence built in to detect new rules and resources automatically
+- **Ingress controllers are not just a 7 layer load balancer, they have intelligence built in to monitor the cluster in order to detect new rules and resources automatically**
 - We do not have an Ingress Controller on Kubernetes by default. So we must deploy one like : GCE(Google layer 7 LB), Nginx..
 - A special build of nginx is used for the nginx ingress controller
 - Settings are stored inside a configmap
