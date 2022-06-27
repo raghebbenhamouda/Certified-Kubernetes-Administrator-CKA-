@@ -41,7 +41,7 @@
 - kubectl runs api requests against kube-apiserver
 - kube-apiserver authenticates, validates the requests, then retrieves the data.
 - When a pod is created, kube-apiserver updates etcd with the info provided by kube-scheduler, then kubelet deploys e container and updates back with that information
-- if you used kubeadm, it was deployed as a pod with files on /etc/kubernetes/manifests, otherwise it was installed on the system !!![REMIRATE LA CARPETA DONDE VA EN SISTEMA]
+- if you used kubeadm, it was deployed as a pod with files on /etc/kubernetes/manifests, otherwise it was installed on the system
 
 ## kube-controller-manager
 - Controllers monitor (through the kube-api server) components and brings them to the desired state
@@ -53,7 +53,9 @@
 ## kube-scheduler
 - decides where to create pods, but doesn't create them, the kubelet creates pods
 - Needed to use the resources as efficiently as possible
-- 2 phases: 1 filter nodes that cannot fit the pod, too small, 2 ranks the remaining nodes in a scale 0-10 with stats like free resources, then chooses the better rank
+- 2 phases: 
+	- 1 filter nodes that cannot fit the pod, too small 
+	- 2 ranks the remaining nodes in a scale 0-10 with stats like free resources, then chooses the better rank
 - if installed with kubeadm, it is a pod. If not, it is on the process list
 
 ## Kubelet
