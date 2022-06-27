@@ -59,7 +59,7 @@
 - if installed with kubeadm, it is a pod. If not, it is on the process list
 
 ## Kubelet
-- In every worker nnode
+- In every worker node
 - When it gets a request, it creates the pod with the container runtime and monitors its status
 - If installed with kubeadm, it doesn't deploy it as a pod. It needs to be manually installed.
 
@@ -69,7 +69,7 @@
 - Virtual network spanning all nodes
 - IP's are ephimeral, pods are accessed through services
 - Services are not actual containers or processes, they are virtual components that live in kubernetes's memory
-- kube-proxy is a process that runs on every kubernetes node, Its job is to look for new services and every time a new service is created it creates the appropriate rules on each node to forward traffic to those services to the backend pods.
+- **kube-proxy is a process that runs on every kubernetes node**, Its job is to look for new services and every time a new service is created it creates the appropriate rules on each node to forward traffic to those services to the backend pods.
 - using iptables rules in all nodes to forward traffic
 - deployed as pods on every node as a daemonset
 
@@ -145,6 +145,7 @@ modifying them.
 - Type specifies the kind of Service we are creating (NodePort/ClusterIP/LoadBalancer)
 
 ### Services: NodePort
+![Alt text](images/node-port.png "api")
 - You can have multiple port mappings within a single service
 - Part of the spec is selector, which links the service to the target pod based on tags
 - In a production environment you need to load balance between **multiple pods**, which the Service does based on the pod tags. It distributes the **load randomly**, but preferring to **keep sessions on a single pod**
