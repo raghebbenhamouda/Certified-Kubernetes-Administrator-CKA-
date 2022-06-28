@@ -249,10 +249,12 @@ We refer to the target pods on the service with their selector tags
 - A pod consumes a given amount of resources from a node
 - The scheduler places the pods where sufficient resources are available
 - If there are insufficient resources pods will not be scheduled
+![Alt text](images/resources-limits.png "api")
 - By default, K8s assume that a pod or container within a pod requires **0.5 CPU and 256Mi of memory**. This is known as the Resource Request for a container.
+- **1 CPU is 1 vCPU(thread) on AWS, 1 core in GCP or Azure or 1 hyper thread.**
+- **1 k(kilobyte) = 1000 bytes and 1 ki(kibibyte) = 1024 bytes**
 - Containers have **requests** (the amount of resources it wants at minimum to dedicate) and the limits (how many resources can a pod consume before it gets evicted)
 - If your application within the pod requires **more than the default resources**, you need to set them in the pod definition file
-![Alt text](images/resources-limits.png "api")
 - This is set under the container spec of a pod, as a resources block and a limits block
 - By default, k8s sets resource limits to **1 CPU and 512Mi** of memory. We can set the resource limits in the pod definition file.
 - If a container tries to use more CPU than its limit, it will be throttled
@@ -264,7 +266,7 @@ We refer to the target pods on the service with their selector tags
 - This is useful for tasks like monitoring where every node gets a monitoring pod
 - An example, kube-proxy, is a DaemonSet
 - Solutions like WeaveNet are also a good candidate for DaemonSets
-- Creating a DaemonSet is similar to DaemonSets, but kind is DaemonSet instead of ReplicaSet
+- Creating a DaemonSet is similar to ReplicaSet, but kind is DaemonSet instead of ReplicaSet
 
 ## Satic pods
 - Apart from contacting the kubernetes api, the kubelet also reads manifests from /etc/kubernetes/manifests/
