@@ -213,7 +213,7 @@ We refer to the target pods on the service with their selector tags
 - Add a section to spec named `tolerations`
 - This section has four key-value pairs: `key`, `operator`, `value` and `effect`
 ![Alt text](images/tolerations-pod.png "api")
-- This four key-value pairs are the same values used when creationg the taint on the node
+- **This four key-value pairs are the same values used when creationg the taint on the node**
 - The values all need to be encased in double quotes
 - These four values are in a list, so you can add several tolerations to a single pod definition
 
@@ -223,6 +223,8 @@ We refer to the target pods on the service with their selector tags
 - We can fix this with either nodeSelectors on the pod spec, which containts labels and selectors set to the nodes.
 - We can label a node with for example `kubectl label node node-01 label=selector`
 - When a pod is created with a nodeSelector it will create it on a node with that selector
+- **Limitations:** We used a single label and selector to achieve our goal here. But what if our requirement is much more complex.
+- For this we have **Node Affinity and Anti Affinity**
 
 ## NodeAffinity / AntiAffinity
 - Used for the cases where we need advanced node selection capabilities
@@ -231,6 +233,10 @@ We refer to the target pods on the service with their selector tags
 - NodeAffinity is matched when a pod is scheduled, but not while it's running.
 - This nodeAffinity can be either required or preferred. If a pod with required nodeAffinity does not find an available node, it will not be scheduled.
 - If the affinity is set to preferred and a node is not available with the requirements set, it will shcedule in another non-compliant node
+
+### NodeAffinity Types
+![Alt text](images/node-affinity-available.png "api")
+![Alt text](images/node-affinity-planned.png "api")
 
 ## NodeAffinity and tolerations
 - Tolerations do not prevent pods from going to other nodes
