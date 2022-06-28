@@ -227,6 +227,7 @@ We refer to the target pods on the service with their selector tags
 - For this we have **Node Affinity and Anti Affinity**
 
 ## NodeAffinity / AntiAffinity
+![Alt text](images/node-affinity.png "api")
 - Used for the cases where we need advanced node selection capabilities
 - Much more complex than nodeSelectors
 - Allows much more control on the value tagging
@@ -248,9 +249,12 @@ We refer to the target pods on the service with their selector tags
 - A pod consumes a given amount of resources from a node
 - The scheduler places the pods where sufficient resources are available
 - If there are insufficient resources pods will not be scheduled
+- By default, K8s assume that a pod or container within a pod requires **0.5 CPU and 256Mi of memory**. This is known as the Resource Request for a container.
 - Containers have **requests** (the amount of resources it wants at minimum to dedicate) and the limits (how many resources can a pod consume before it gets evicted)
+- If your application within the pod requires **more than the default resources**, you need to set them in the pod definition file
+![Alt text](images/resources-limits.png "api")
 - This is set under the container spec of a pod, as a resources block and a limits block
-- we can specify both CPU and memory usage
+- By default, k8s sets resource limits to **1 CPU and 512Mi** of memory. We can set the resource limits in the pod definition file.
 - If a container tries to use more CPU than its limit, it will be throttled
 - If a container tries to use more memory than its limit, the pod will be evicted
 
