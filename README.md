@@ -212,7 +212,7 @@ We refer to the target pods on the service with their selector tags
 - **Tolerations are set on pods**
 - Add a section to spec named `tolerations`
 - This section has four key-value pairs: `key`, `operator`, `value` and `effect`
-[Alt text](images/tolerations-pod.png "api")
+![Alt text](images/tolerations-pod.png "api")
 - This four key-value pairs are the same values used when creationg the taint on the node
 - The values all need to be encased in double quotes
 - These four values are in a list, so you can add several tolerations to a single pod definition
