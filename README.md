@@ -191,7 +191,7 @@ We refer to the target pods on the service with their selector tags
 - We can also declare our own arbitrary tags
 - under metadata, on the labels object, we can create as many labels we want
 - When checking resources witk kubectl we filter with the `--selector` tag, like `kubectl get pods --selector app=nginx-app`
-- Annotations are similar to labels, but not used internally for pattern matching on Kubernetes, for information like application version
+- **Annotations are similar to labels**, but not used internally for pattern matching on Kubernetes, for information like application version
 
 ## Taints and tolerations
 - Taints prevent tagged resources from landing on a tainted node
@@ -205,12 +205,15 @@ We refer to the target pods on the service with their selector tags
 - NoSchedule avoids new non-tolerant pods getting to the node, but lets the existing ones stay
 - PreferNoSchedule will try not to schedule pods to the node, but has the chance to do it in case it needs to
 - NoExecute will not schedule new non-tolerant pods on that node and will also evict(kill) the current ones that don't match the toleration rule
-- **A taint is set up on the master node so it doesn't run any worker pods, so it can focus its work on cluster management**
+- **Master is tained:** A taint is set up on the master node so it doesn't run any worker pods, so it can focus its work on cluster management
 
 ### Tolerations
+![Alt text](images/taint-pod.png "api")
 - **Tolerations are set on pods**
 - Add a section to spec named `tolerations`
 - This section has four key-value pairs: `key`, `operator`, `value` and `effect`
+[Alt text](images/tolerations-pod.png "api")
+- This four key-value pairs are the same values used when creationg the taint on the node
 - The values all need to be encased in double quotes
 - These four values are in a list, so you can add several tolerations to a single pod definition
 
