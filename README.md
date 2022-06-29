@@ -269,10 +269,10 @@ We refer to the target pods on the service with their selector tags
 - Creating a DaemonSet is similar to ReplicaSet, but kind is DaemonSet instead of ReplicaSet
 
 ## Satic pods
-- Apart from contacting the kubernetes api, the kubelet also reads manifests from /etc/kubernetes/manifests/
+- Apart from contacting the kubernetes api, the kubelet also reads manifests from `/etc/kubernetes/manifests/`
 - This is independent from the rest of the cluster
 - This **only allows you to create pods**. Not replica sets, or deployments for example. The kubelet works at a pod level and can only create pods
-- You can see the pods or containers with `docker ps`. We do not have access to the kubectl command, as we do not have cluster access in this situation.
+- You can see the pods or containers with `docker ps`. We do not have access to the kubectl(it works with kube-apiserver) command, as we do not have cluster access in this situation.
 - The kubelet can create both kubeapi-server and static pods at the same time
 - **the kubeapi-server will see static pods as other pods in the cluster, but will not be able to interact with them**
 - Static pods are useful for tasks like setting up the control plane like etcd, apiserver or controller manager
