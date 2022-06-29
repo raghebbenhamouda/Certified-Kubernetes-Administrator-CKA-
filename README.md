@@ -277,16 +277,20 @@ We refer to the target pods on the service with their selector tags
 - **the kubeapi-server will see static pods as other pods in the cluster, but will not be able to interact with them**
 - Static pods are useful for tasks like setting up the control plane like etcd, apiserver or controller manager
 - This is how kubeadm sets up a cluster, as static pods
-- Static pods usually have the node name at the end of their pod name. This can help you identify static pods!
+- Static pods usually have **the node name at the end of their pod name**. This can help you **identify static pods!**
 
 ## Multiple schedulers
-- The default scheduler distributes pods evenly taking into account taints, tolerations and nodeAffinity
+- The default scheduler distributes pods evenly taking into account **taints, tolerations and nodeAffinity**
 - You can also write your own Kubernetes scheduler program, either replacing the default or using both at the same time
 - One kubernetes cluster can have multiple schedulers
 - When you create a pod you can run it using a specified scheduler
 - When a cluster is deployed with kubeadm we can find the static pod declaration for the scheduler and write our own
 - We can add the scheduler to a pod with the value schedulerName inside of a pod definition spec
 - We can check which scheduler ran the pod with `kubectl get events`, or see the logs of a specific scheduler with `kubectl logs`
+![Alt text](images/multi-scheduler.png "api")
+- To get multiple schedulers working you must either set **the leader-elect** option to false, in case where you don’t have multiple masters. In case you do have multiple masters, you can pass in an additional parameter to set a lock object name.
+
+This is to differentiate the new custom scheduler from the default during the leader election process
 - We create a new scheduler by modifying a copy of the current scheduler with the following configuration:
 ```
     - --leader-elect=false
@@ -299,11 +303,11 @@ We refer to the target pods on the service with their selector tags
 # Cluster monitoring
 
 ## Resource monitoring
-- node-level metrics: number of nodes, health, cpu utilization, memory consumption
+- Node-level metrics: number of nodes, health, cpu utilization, memory consumption
 - Same for pods
 - Monitoring with tools like Metrics Server
-- One Metrics Server per cluster
-- in-memory metrics solution, without historical data
+- One Metrics Server per cluster, it retrieves metrics from each nodes and pods, aggregates them and stores them in memory.
+- Metrics Serve does not store the metrics on the disk and as a result you cannot see historical performance data.
 - third-party solutions like Prometheus
 - **cAdvisor** inside the kubelet monitors pods and sends the metrics to the Metrics Server
 - You can view the info with `kubectl top node` or `kubectl top pods`
