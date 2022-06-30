@@ -336,7 +336,7 @@ This is to differentiate the new custom scheduler from the default during the le
 - Containers are supposed to run a specific task
 - When that task is done, the container stops
 - We can specify what task a container has to run in its configuration declaration
-- `CMD` docker commands always run the same, but `ENTRYPOINT` gets command line parameters from an execution and it runs when the container starts
+- `CMD` commands always run the same, but `ENTRYPOINT` gets command line parameters from an execution and it runs when the container starts
 - In case of the **CMD** instruction the command line parameters passed will get replaced entirely, whereas in case of **ENTRYPOINT** the command line parameters will get appended.
 - If we run the ubuntu-sleeper without appending the number of seconds then the command at startup will be just sleep and you get the error that the operant is missing. So how do we configure a default value for the command ?
 - If one was not specified in the command line that's where you would use both **ENTRYPOINT** as well as the **CMD** instruction.
@@ -345,9 +345,9 @@ This is to differentiate the new custom scheduler from the default during the le
 - You can override the entrypoint command that is inside the dockerfile with the `--entrypoint` docker argument
 
 ## Commands and arguments for pods
-- You can use the **args** option on the pod definition file on the spec for it to pass values to the pod startup container
-- you can also override the entrypoint with the **command** directive in the same block
-
+![Alt text](images/args-cmd-pod.png "api")
+- Anything that is appended to the docker run command will go into the `args` property of the pod definition file in the form of an **array**.
+- The `CMD` field corresponds to the `ENTRYPOINT` instruction in the Dockerfile
 ## Environment variables
 - We can use the env array property on a pod definition spec to pass environment variables to a container
 - We use this for ConfigMaps and Secrets too, with a reference to where the value comes from
