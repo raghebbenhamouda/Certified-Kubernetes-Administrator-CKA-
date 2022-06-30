@@ -356,6 +356,7 @@ This is to differentiate the new custom scheduler from the default during the le
 - We use this for ConfigMaps and Secrets too, with a reference to where the value comes from
 
 ## ConfigMaps
+![Alt text](images/configmap.png "api")
 - ConfigMaps are groups of **key-value pairs** that we inject into pods as environment variables
 - They can be created both declaratively or imperatively
 - After creating a ConfigMap we pass it to a pod with the spec `object envFrom` as a `configMapRef`
@@ -370,7 +371,7 @@ This is to differentiate the new custom scheduler from the default during the le
 - First we create a secret, either imperatively or declaratively, and then we attach it to a pod.
 - This is done similarly to ConfigMap attachment, but we use `secretKeyRef` instead
 - Secrets are encoded, not encrypted
-- Kubernetes takes some precautions to protecting secrets, like only sending the secrets to nodes that require them, never writing them to disk, and deleting the secret once it isn't needed anymore
+- Kubernetes takes some precautions to protecting secrets, **like only sending the secrets to nodes that require them, never writing them to disk, and deleting the secret once it isn't needed anymore**
 
 ## Multi-container pods
 - Sometimes we need multiple tasks running in a single pod, like a logging agent for a webserver
