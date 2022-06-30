@@ -374,8 +374,10 @@ This is to differentiate the new custom scheduler from the default during the le
 - Kubernetes takes some precautions to protecting secrets, **like only sending the secrets to nodes that require them, never writing them to disk, and deleting the secret once it isn't needed anymore**
 
 ## Multi-container pods
-- Sometimes we need multiple tasks running in a single pod, like a logging agent for a webserver
-- If we run them in the same pod, they share network space and storage volumes
+- Sometimes we need multiple tasks running in a single pod, like a **logging agent** and a **webserver**
+- With Multi-container pods share the same **lifecycle** which means they are created together and destroyed together 
+- **Also they share network space and storage volumes**
+- With this way we do not have to establish volume sharing or services between the pods to enable communication between them
 - To add a second container to a pod definition spec, just add a new container definition to the list
 
 ## InitContainers
