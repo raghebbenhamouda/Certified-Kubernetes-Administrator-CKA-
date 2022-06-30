@@ -331,6 +331,9 @@ This is to differentiate the new custom scheduler from the default during the le
 - The two ways of deployment are **Recreate** and **RollingUpdate**. Recreate means a downtime taking down everything at once, RollingUpdate avoids downtime (the default)
 - You can undo changes of a rollout with `kubectl rollout undo deployment/[deployment name]`
 
+## ENTRYPOINT VS CMD
+![Alt text](images/entrypoint-vs-cmd.png "api")
+
 ## Configure docker applications
 ![Alt text](images/entrypoint.png "api")
 - Containers are supposed to run a specific task
@@ -347,7 +350,7 @@ This is to differentiate the new custom scheduler from the default during the le
 ## Commands and arguments for pods
 ![Alt text](images/args-cmd-pod.png "api")
 - Anything that is appended to the docker run command will go into the `args` property of the pod definition file in the form of an **array**.
-- The `CMD` field corresponds to the `ENTRYPOINT` instruction in the Dockerfile
+- The `command` field corresponds to the `ENTRYPOINT` instruction in the Dockerfile
 ## Environment variables
 - We can use the env array property on a pod definition spec to pass environment variables to a container
 - We use this for ConfigMaps and Secrets too, with a reference to where the value comes from
