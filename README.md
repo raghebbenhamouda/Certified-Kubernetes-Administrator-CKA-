@@ -320,9 +320,10 @@ This is to differentiate the new custom scheduler from the default during the le
 # Application Lifecycle Management
 
 ## Rolling updates and rollbacks
+![Alt text](images/rollout-deployment.png "api")
 - When you create a deployment it triggers a rollout
 - When the deployment changes, a new rollout(pods with the new version) starts
-- That deployment change creates a deployment revision
+- That deployment change creates a **new deployment revision**, This helps keep track of the changes made to our deployment and enables us to roll back to a previous version of deployment if necessary.
 - You can see the status of a rollout with `kubectl status rollout deployment/[deployment name]`
 -  You can see the history of a rollout with `kubectl history rollout deployment/[deployment name]`
 - The new versions of pod instances are created one by one, replacing an old one every time
@@ -331,12 +332,17 @@ This is to differentiate the new custom scheduler from the default during the le
 - You can undo changes of a rollout with `kubectl rollout undo deployment/[deployment name]`
 
 ## Configure docker applications
+![Alt text](images/entrypoint.png "api")
 - Containers are supposed to run a specific task
 - When that task is done, the container stops
 - We can specify what task a container has to run in its configuration declaration
-- CMD docker commands always run the same, but ENTRYPOINT gets command line parameters from an execution and it runs when the container starts
-- you can combine both for a default value execution if no values are specified
-- You can override the entrypoint command that is inside the dockerfile with the --entrypoint docker argument
+- `CMD` docker commands always run the same, but `ENTRYPOINT` gets command line parameters from an execution and it runs when the container starts
+- In case of the **CMD** instruction the command line parameters passed will get replaced entirely, whereas in case of **ENTRYPOINT** the command line parameters will get appended.
+- If we run the ubuntu-sleeper without appending the number of seconds then the command at startup will be just sleep and you get the error that the operant is missing. So how do we configure a default value for the command ?
+- If one was not specified in the command line that's where you would use both **ENTRYPOINT** as well as the **CMD** instruction.
+![Alt text](images/entrypoint-cmd.png "api")
+- In this case the command instruction will be appended to the entry point instruction so at startup the command would be `sleep 5`.
+- You can override the entrypoint command that is inside the dockerfile with the `--entrypoint` docker argument
 
 ## Commands and arguments for pods
 - You can use the **args** option on the pod definition file on the spec for it to pass values to the pod startup container
