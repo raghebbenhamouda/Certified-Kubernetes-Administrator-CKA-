@@ -392,6 +392,7 @@ Following the separation of concerns principle, we implement **the Sidecar patte
 - InitContainers **run sequentially** when a pod starts
 - If InitContainers fail, the pod will restart the creation process
 - These are declared under the initContainers array on the pod spec, alongside the Containers array
+- Example: Wait for some time before starting the app container with a command like
 
 # Cluster maintenance
 
@@ -401,10 +402,10 @@ Following the separation of concerns principle, we implement **the Sidecar patte
 - If a node is down **more than 5 minutes**, pods on a node are considered down and will be recreated as they will **be evicted**
 - When the cluster comes back up, it will come back up empty and ready to schedule new pods
 - To be sure that we will not lose service, we drain(move all the pod to other nodes in the cluster) the workloads from the node before removing it from the cluster (cordon and drain the node)
-- **Cordon** will not allow new pods to schedule into that node
+- **Cordon** will not allow new pods to schedule into that node, Unlike drain it does not terminate or move the pods on an existing node
 - **Drain** will remove the current pods on that node **and cordon it**
 - When the node is back up, we need to uncordon it so it can get pods scheduled to it
-- Nodes cannot be drained if they are running pods noot managed by a daemonset, replicaset, etc, which would be lost on a drain eviction. Forcing is possible, but not recommended
+- Nodes cannot be drained if they are running pods not managed by a daemonset, replicaset, etc, which would be lost on a drain eviction. Forcing is possible, but not recommended
 
 ## Cluster upgrade
 - It is not mandatory that all kubernetes components are all the same version
