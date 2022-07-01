@@ -420,8 +420,9 @@ All the bug fixes and improvements first go into an **alpha** release. **The fea
 From there the code make their way to **beta** release where the code is well tested. **The new features are enabled by default.**</br>
 
 And finally they make their way to the main **stable release**.</br>
+
+![Alt text](images/beta-alpha-versions.png "api")</br>
 ### Kubernetes Components
-![Alt text](images/beta-alpha-versions.png "api")/br>
 Downloaded package has `all the kubernetes components` in it except `ETCD Cluster` and `CoreDNS`as they are seperate projects.</br>
 
 The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are **separate projects**.</br>
