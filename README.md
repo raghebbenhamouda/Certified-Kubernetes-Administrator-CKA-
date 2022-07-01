@@ -405,7 +405,7 @@ Following the separation of concerns principle, we implement **the Sidecar patte
 - **Cordon** will not allow new pods to schedule into that node, Unlike drain it does not terminate or move the pods on an existing node
 - **Drain** will remove the current pods on that node **and cordon it**
 - When the node is back up, we need to uncordon it so it can get pods scheduled to it
-- Nodes cannot be drained if they are running pods not managed by a daemonset, replicaset, etc, which would be lost on a drain eviction. Forcing is possible, but not recommended
+- Nodes cannot be drained if they are running pods not managed by a **daemonset**, **replicaset**, etc, which would be lost on a drain eviction. Forcing is possible, but not recommended
 
 ## Cluster upgrade
 - It is not mandatory that all kubernetes components are all the same version
