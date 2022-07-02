@@ -475,11 +475,10 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 	- `Humans`, such as the `Administrators` and `Developers`
 	- `Robots` such as other `processes/services` or `applications` that require access to the cluster.
 
-- **Kubernetes does not natively manage user accounts**, it uses external tools like **certificates** or **login systems like LDAP**
-- **Kubernetes does manage application access with Service Accounts**
+- Kubernetes does not natively manage **user accounts**, it uses external tools like `certificates` or `login systems like LDAP`
+- Kubernetes does manage application access with `Service Accounts`
 - **All user access is managed by the kube-apiserver**
-- Users access the cluster using static passswords or token **files**, certificates, or through external identity services like LDAP
-
+- Users access the cluster using `static passswords` or `token files`, `certificates`, or through `external identity services like LDAP`
 ### Password or token-based authentication
 - Deprecated in Kubernetes 1.19
 - The first option is creating a csv file with users and passing it as an option to the kube-apiserver for basic authentication
@@ -492,7 +491,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - Private keys are usually with extension **.key** or **-key.pem**
 - All communication within the cluster and with the user is done through TLS
 - Each cluster component has its own key pair: kube-apiserver, etcdserver, kubelet
-- Each user needs its own certificate pair to access the kube-apiserver through tkubectl. Same for kube-scheduler, kube-controller manager and kube-proxy, which act just like a client
+- Each user needs its own certificate pair to access the kube-apiserver through kubectl. Same for kube-scheduler, kube-controller manager and kube-proxy, which act just like a client
 - You need a Certificate Authority for the cluster, which has its own key pair to sign other certificates
 - Generating certificates is done with tools like **EasyRSA**, **OpenSSL** or **CFSSL**
 - Getting a certificate has 3 steps: 
