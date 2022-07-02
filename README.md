@@ -470,10 +470,13 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - By default all pods can access all other pods, we can restict access between them using **network policies**
 
 ## Authentication
-- This focuses on how users access the cluster itself
-- This has 2 main areas, users like administrator and developers, and robots like processes, services and applications
+- Different users that may be accessing the cluster security of end users who access the applications deployed on the cluster is managed by the applications themselves internally.
+- So, we left with **2 types of users**
+	- `Humans`, such as the `Administrators` and `Developers`
+	- `Robots` such as other `processes/services` or `applications` that require access to the cluster.
+
 - **Kubernetes does not natively manage user accounts**, it uses external tools like **certificates** or **login systems like LDAP**
-- **Kubernetes does manage applicacion access with Service Accounts**
+- **Kubernetes does manage application access with Service Accounts**
 - **All user access is managed by the kube-apiserver**
 - Users access the cluster using static passswords or token **files**, certificates, or through external identity services like LDAP
 
