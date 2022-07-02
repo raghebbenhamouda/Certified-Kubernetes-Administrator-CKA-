@@ -392,7 +392,7 @@ Following the separation of concerns principle, we implement **the Sidecar patte
 - InitContainers **run sequentially** when a pod starts
 - If InitContainers fail, the pod will restart the creation process
 - These are declared under the initContainers array on the pod spec, alongside the Containers array
-- Example: Wait for some time before starting the app container with a command like
+- Example: Wait for some time before starting the app container with a command like: `sleep 1000`
 
 # Cluster maintenance
 
@@ -459,11 +459,12 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 # Kubernetes security
 
 ## Security primitives
-- First step is securing the cluster infrastructure, like node access only with passwordless authentication
+- First step is securing the cluster infrastructure, like node access only `SSH key based authentication(passwordless)`
 - **First line of defense** at a cluster level is **securing the kube-apiserver**
-- **1- Who can access:** Defined by the authentication mechanisms: **usernames and passwords**, **usernames and tokens**, **certificates** and service accounts
-- **2- What can they do:** After that, authroization levels are defined so authenticated users **(Role based control...)** have limited permissions
-- All communication between the cluster components and the kube-apiserver is **secured with TLS**
+- `Authentication`: Who can access the API Server is defined by the Authentication mechanisms: : `usernames and passwords`, `usernames and tokens`, `certificates` and `service accounts`
+- `Authorization`: Once they gain access to the cluster, what they can do is defined by authorization mechanisms.
+![Alt text](images/TLS -Certificates.png "api")</br>
+- `TLS Certificates`: All communication with the cluster, between the various components such as the ETCD Cluster, kube-controller-manager, scheduler, api server, as well as those running on the working nodes such as the kubelet and kubeproxy is secured using `TLS encryption`.
 - By default all pods can access all other pods, we can restict access between them using **network policies**
 
 ## Authentication
