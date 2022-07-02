@@ -463,7 +463,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - **First line of defense** at a cluster level is **securing the kube-apiserver**
 - `Authentication`: Who can access the API Server is defined by the Authentication mechanisms: : `usernames and passwords`, `usernames and tokens`, `certificates` and `service accounts`
 - `Authorization`: Once they gain access to the cluster, what they can do is defined by authorization mechanisms.
-![Alt text](images/TLS -Certificates.png "api")</br>
+![Alt text](images/TLS-Certificates.png "api")</br>
 
 - `TLS Certificates`: All communication with the cluster, between the various components such as the ETCD Cluster, kube-controller-manager, scheduler, api server, as well as those running on the working nodes such as the kubelet and kubeproxy is secured using `TLS encryption`.
 - By default all pods can access all other pods, we can restict access between them using **network policies**
