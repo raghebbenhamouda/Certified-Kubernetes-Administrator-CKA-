@@ -540,16 +540,20 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - All certificate-related tasks are handled by the **kube-controller manager(It has controllers in it called as csr-approving, csr-signing)**
 
 ## KubeConfig
+![Alt text](images/curl_kubeconfig.png "api")
+- Client uses the **certificate file** and **key** to query the kubernetes **Rest API** for a list of pods using curl or using **kubectl**.
+
+![Alt text](images/kubeconfig.png "api")
 - KubeConfig files are used to authenticate against a specific Kubernetes cluster
 - This file is stored in a yaml format with 3 sections: clusters, contexts and users
 - **Clusters** specifies the kubernetes clusters that the kubeconfig file knows about
-- **Users** specifies the users you can use
+- **Users** specifies the users you can use(they have different privileges on different cluster)
 - **Context** gets the last 2 together, specifying which users can you use on which clusters
 - You can view your kubeconfig file with `kubectl config view`
 - You can specify which kubeconfig file to use when running a kubectl command
 - You can use `kubectl config use-context [context name]` to change between cluster contexts
-- You can configure kubectl to switch to a specific namespace inside of a context when switched
-- Certificates can be specified either as a file path or as a base64 data string
+- You can configure kubectl to switch to a **specific namespace** inside of a context when switched
+- Certificates can be specified either as a **file path** or as a **base64 data string**
 
 ## API groups
 - Kubernetes API endpoints are grouped as tasks, like metrics, health and logs
