@@ -487,11 +487,16 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - **This authentication system is not recommended as it is unencrypted and static**
 
 ### Certificate-based authentication
+![Alt text](images/certificates_types.png "api")
 - Certificates with public key are named **.crt** or **.pem**
 - Private keys are usually with extension **.key** or **-key.pem**
+- Types of Certificates:
+	- Server certificates: configured on servers
+	- Root certificate(CA Certificate): CA own set of public and private key pairs that it uses to sign server certificates
+	- Client certificates: configured on the client.
 - All communication within the cluster and with the user is done through TLS
 - Each cluster component has its own key pair: kube-apiserver, etcdserver, kubelet
-- Each user needs its own certificate pair to access the kube-apiserver through kubectl. Same for kube-scheduler, kube-controller manager and kube-proxy, which act just like a client
+- Each user needs its own certificate pair to access the `kube-apiserver` through kubectl. Same for `kube-scheduler`, `kube-controller` manager and `kube-proxy`, which act just like a client
 - You need a Certificate Authority for the cluster, which has its own key pair to sign other certificates
 - Generating certificates is done with tools like **EasyRSA**, **OpenSSL** or **CFSSL**
 - Getting a certificate has 3 steps: 
