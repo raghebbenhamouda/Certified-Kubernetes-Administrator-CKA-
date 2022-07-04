@@ -498,7 +498,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 #### Certificates Groups
 ![Alt text](images/certificates_groups.png "api")
 
-####  Communication using Certificates
+#### Communication using Certificates
 ![Alt text](images/certificates_flow.png "api")
 - All communication within the cluster and with the user is done through TLS
 - Each cluster component has its own key pair: kube-apiserver, etcdserver, kubelet
@@ -506,6 +506,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - You need a Certificate Authority for the cluster, which has its own key pair to sign other certificates
 
  #### Certificate Creation
+ ![Alt text](images/certificate_creation.png "api")
 - Generating certificates is done with tools like **EasyRSA**, **OpenSSL** or **CFSSL**
 - First we generate a certificate for the CA, Going forward for all other certificates, we will use the CA provate key,to sign all of them.
 - Getting a certificate has 3 steps: 
