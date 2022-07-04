@@ -558,8 +558,8 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 ## API groups
 - Kubernetes API endpoints are grouped as tasks, like metrics, health and logs
 - Separated in the core **(/api/v1)** and named groups **(/apis)**
-- Core controls namespaces, nodes, persistent volumes, pods...![Alt text](api.png "api")
-- Named controls apps, extensions, networking, storage, authentication...![Alt text](apis.png "apis")
+- Core controls namespaces, nodes, persistent volumes, pods...![Alt text](images/api.png "api")
+- Named controls apps, extensions, networking, storage, authentication...![Alt text](images/apis.png "apis")
 - Each resource has a set of actions that we can perform
 - Accessing the API requires authentication and authorization to the resources
 - We can use kubectl proxy to make a curl endpoint that accepts requests using our kubeconfig file
