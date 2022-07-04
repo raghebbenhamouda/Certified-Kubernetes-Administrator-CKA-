@@ -487,28 +487,37 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - **This authentication system is not recommended as it is unencrypted and static**
 
 ### Certificate-based authentication
+#### Types of Certificate
 ![Alt text](images/certificates_types.png "api")
 - Certificates with public key are named **.crt** or **.pem**
 - Private keys are usually with extension **.key** or **-key.pem**
 - Types of Certificates:
-	- Server certificates: configured on servers
-	- Root certificate(CA Certificate): CA own set of public and private key pairs that it uses to sign server certificates
-	- Client certificates: configured on the client.
+	- **Server certificates**: configured on servers
+	- **Root certificate(CA Certificate)**: CA own set of public and private key pairs that it uses to sign server certificates
+	- **Client certificates**: configured on the client
+#### Certificates Groups
+![Alt text](images/certificates_groups.png "api")
+
+####  Communication using Certificates
+![Alt text](images/certificates_flow.png "api")
 - All communication within the cluster and with the user is done through TLS
 - Each cluster component has its own key pair: kube-apiserver, etcdserver, kubelet
 - Each user needs its own certificate pair to access the `kube-apiserver` through kubectl. Same for `kube-scheduler`, `kube-controller` manager and `kube-proxy`, which act just like a client
 - You need a Certificate Authority for the cluster, which has its own key pair to sign other certificates
+
+ #### Certificate Creation
 - Generating certificates is done with tools like **EasyRSA**, **OpenSSL** or **CFSSL**
+- First we generate a certificate for the CA, Going forward for all other certificates, we will use the CA provate key,to sign all of them.
 - Getting a certificate has 3 steps: 
 	- **1:** generating the certificat(generating a private key)
 	- **2:** generating a signing request(using the private key)
-	-  **3:** signing the certificate
-- Add values to the CSR to add the user certificate to certain groups, like the administrators group
-- You can add these certificates to a Kubeconfig file to avoid passing them as values to every request
+	-  **3:** signing the certificate(using the private key of the CA)
+- Add values to the CSR to add the **user certificate to certain groups**, like the **administrators group**
+- You can add these certificates to a **Kubeconfig file** to avoid passing them as values to every request
 - Any user requests go through the kube-apiserver and need to authenticate against it
 - the kube-apiserver certificate needs to accept any name that the kube-apiserver will be referred as: the IP, the local name, or the fully qualified domain name
 - Kubelet certificates are named after the node they run on
-- Certificates can be viewed on the cluster on the locations specified on the kube-apiserver pod definition file (if it was set up with kubeadm), generally /etc/kubernetes/manifests/kube-apiserver.yaml
+- **Certificates can be viewed on the cluster on the locations specified on the kube-apiserver pod definition file (if it was set up with kubeadm), generally /etc/kubernetes/manifests/kube-apiserver.yaml**
 
 ## Certificate API
 - Whoever has access to the CA files has access to creating certificates for the cluster
