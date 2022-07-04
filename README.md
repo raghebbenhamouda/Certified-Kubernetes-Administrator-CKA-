@@ -558,7 +558,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 ## API groups
 ### API Groups
 ![Alt text](images/groups.png "api")
-- The kubernetes API is grouped into multiple such groups based on thier purpose. Such as one for `APIs`, one for `healthz`, `metrics` and `logs` etc.
+ The kubernetes API is grouped into multiple such groups based on thier purpose. Such as one for `APIs`, one for `healthz`, `metrics` and `logs` etc.
 ### API and APIs
 - Separated in the core **(/api/v1)** and named groups **(/apis)**
 - Core(Where all the functionality exists) controls namespaces, nodes, persistent volumes, pods...![Alt text](images/api.png "api")
@@ -572,13 +572,16 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - An example is not allowing a developer to delete nodes on a cluster
 - Kubernetes supports several authentication mechanisms: Node, ABAC(Attribute based authorization), RBAC(RoleBAC) and Webhooks
 - **Node-based authorization** allows privileges for the Kubelet to work on its resources
-- **ABAC is attribute-based authoritzation**, which allows a certain user to use a set of permissions defined by a policy. This is done for each user or group, and each time we make changes to it we need to restart the kube-apiserver
+- **ABAC is attribute-based authoritzation**: which allows a certain user to use a set of permissions defined by a policy. This is done for each user or group, and each time we make changes to it we need to restart the kube-apiserver
 - **RBAC** associates permissions to a specific role and we assign the users and groups to the role, and when a role is modified it is immediately applied to all users associated to it
 - **Webhook** allows external authorization management with third party tools like OpenPolicyAgent
 - If not specified Kubernetes is set to always allow requests
-- **On the kube-apiserver configuration file we specify a list of authorization managers, and a request will follow them in order. If a request is denied, it jumps to the next authorization validator in the chain**
+
+![Alt text](images/authorization_mode.png "apis")
+ On the kube-apiserver configuration file we specify a list of **authorization managers**, and a request will follow them in order. If a request is denied, it jumps to the n**ext authorization validator in the chain**
 
 ## Role-Based Access controls
+![Alt text](images/role-and-rolebinding.png "apis")
 - Roles are objects defined in Kubernetes
 - We define these roles in a yaml configuration file
 - This file holds the role name, what resources it applies to, and what you can do to those resources if you're part of that role
