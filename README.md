@@ -519,19 +519,25 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - the kube-apiserver certificate needs to accept any name that the kube-apiserver will be referred as: the IP, the local name, or the fully qualified domain name 
 - Kubelet crtificates are named after the node they run on
 ![Alt text](images/kube_apiserver_certificates.png "api")
-- Add the `CA certificate`, `generated certificate` and the `private key` to the file inside `etc/kubernetes/manifests/`of each `ommponents``
+- Add the `CA certificate`, `generated certificate` and the `private key`  to the file inside `etc/kubernetes/manifests/`of each `commponents``
 - **Certificates can be viewed on the cluster on the locations specified on the kube-apiserver pod definition file (if it was set up with kubeadm), generally /etc/kubernetes/manifests/kube-apiserver.yaml**
 
+## View Certificate Details
+[Alt text](images/certfi_details.png "api")
+- Different solutions available of deploying a kubernetes cluster and they use different methods to generate and manage certificates
+-  If we deploy a kubernetes cluster from scratch we generate all the certificates by yourself, we deploy all the components as **native services on the nodes**
+-  If we rely on an automated provisioning tool like **kubeadm**, it takes care of automatically generating and configuring the cluster, It deploys these **as PODs**.
+
 ## Certificate API
-- Whoever has access to the CA files has access to creating certificates for the cluster
+- Whoever has access to the **CA files** has access to creating certificates for the cluster
 - These files should be very well protected. They are usually on the master node
-- To avoid doing this manually Kubernetes has a certificate signing API to renew them through the API with kubectl commands
+- To avoid doing this manually Kubernetes has a `certificate signing API` to renew them through the API with kubectl commands
 - You send a CSR directly to kubernetes, When the administrator receives a CSR instead of logging onto the master node and signing the certificate
 - The admin creates a Kubernetes API object called **CSR**
 - This CSR is created on the cluster as an object using a yaml manifest
 - Administrators can see kubernetes csr's and can approve them or deny them as needed
 - This generated certificate can then be retrieved from the resulting certificate object's yaml
-- All certificate-related tasks are handled by the **kube-controller manager(It has controllers in it called as csr-approving, csr-signing) **
+- All certificate-related tasks are handled by the **kube-controller manager(It has controllers in it called as csr-approving, csr-signing)**
 
 ## KubeConfig
 - KubeConfig files are used to authenticate against a specific Kubernetes cluster
