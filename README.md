@@ -513,11 +513,13 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 	- **1:** generating the certificat(generating a private key)
 	- **2:** generating a signing request(using the private key)
 	-  **3:** signing the certificate(using the private key of the CA)
-- Add values to the CSR to add the **user certificate to certain groups**, like the **administrators group**
+- Add values to the CSR to add the **user certificate to certain groups(the user will get the group permissions after the certificate generation)**, like the **administrators group**
 - You can add these certificates to a **Kubeconfig file** to avoid passing them as values to every request
 - Any user requests go through the kube-apiserver and need to authenticate against it
-- the kube-apiserver certificate needs to accept any name that the kube-apiserver will be referred as: the IP, the local name, or the fully qualified domain name
-- Kubelet certificates are named after the node they run on
+- the kube-apiserver certificate needs to accept any name that the kube-apiserver will be referred as: the IP, the local name, or the fully qualified domain name 
+- Kubelet crtificates are named after the node they run on
+![Alt text](images/kube_apiserver_certificates.png "api")
+- Add the `CA certificate`, `generated certificate` and the `private key` to the file inside `etc/kubernetes/manifests/`of each `ommponents``
 - **Certificates can be viewed on the cluster on the locations specified on the kube-apiserver pod definition file (if it was set up with kubeadm), generally /etc/kubernetes/manifests/kube-apiserver.yaml**
 
 ## Certificate API
