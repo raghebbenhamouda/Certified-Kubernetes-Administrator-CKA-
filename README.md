@@ -523,7 +523,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - **Certificates can be viewed on the cluster on the locations specified on the kube-apiserver pod definition file (if it was set up with kubeadm), generally /etc/kubernetes/manifests/kube-apiserver.yaml**
 
 ## View Certificate Details
-[Alt text](images/certfi_details.png "api")
+![Alt text](images/certfi_details.png "api")
 - Different solutions available of deploying a kubernetes cluster and they use different methods to generate and manage certificates
 -  If we deploy a kubernetes cluster from scratch we generate all the certificates by yourself, we deploy all the components as **native services on the nodes**
 -  If we rely on an automated provisioning tool like **kubeadm**, it takes care of automatically generating and configuring the cluster, It deploys these **as PODs**.
