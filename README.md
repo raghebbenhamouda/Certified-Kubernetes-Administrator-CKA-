@@ -652,15 +652,19 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 # Storage
 
 ## Storage in Docker
-In this section, we will take a look at docker Storage driver and Filesystem [GitHub Pages](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/08-Storage/03-Storage-in-Docker.md).
-## Container Runtime Interface(CRI)
-- The container runtime interface is a standard that defines how an orchestration solution like k8s would communicate with container run times like Docker.
--If any new container runtime interface is developed, they can simply follow the CRI standards.
+In this section, we will take a look at docker Storage driver and Filesystem [Storage in Docker](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/08-Storage/03-Storage-in-Docker.md)
+## Volume in Docker
+In this section, we will take a look at docker Storage driver and Filesystem [Storage in Docker](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/08-Storage/04-Volume-Driver-Plugins-in-Docker.md)
+## Container Interfaces
+![Alt text](images/container_interfaces.png "apis")
+### Container Runtime Interface(CRI)
+- The container runtime interface is a standard that defines how an orchestration solution like k8s would communicate with a container runtime like Docker.
+- If any new container runtime interface is developed, they can simply follow the CRI standards.
 
-## Container Networking Interface(CNI)
+### Container Networking Interface(CNI)
 - The container networking interface was introduced, to extend support for different networking solutions
 
-## Container Storage Interface(CSI)
+### Container Storage Interface(CSI)
 - The container storage interface was developed to support multiple storage solutions
 - It allows any container orchestration tool to work with any storage vendor(Amazon EBS)
 
