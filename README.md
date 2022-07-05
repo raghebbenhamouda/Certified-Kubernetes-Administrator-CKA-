@@ -599,12 +599,14 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - You can give users access **to specific resources rather than entire resource lists**, like only allowing read access to a pod named nginx-ingress by adding `resourceNames` Field
 
 ## ClusterRoles and ClusterRoleBindings
-- `Roles` and `Rolebindings` are namespaced meaning they are created within namespaces.
-- As opposed to Roles and RoleBindings, these are cluster-wide and can refer to resources without a namespace, like cluster nodes
-- Resources are either namespaced or cluster-scoped
-- Example of cluster scoped resources are nodes, persistent volumes, namespaces or certificate signing requests
-- A cluster role  admin can be created can add and delete nodes
-- A storage admin can add and delete storage volumes and volume claims
+- **Roles** and **Rolebindings** are **namespaced** meaning they are created within namespaces.
+- Can you group or isolate nodes within a namespace?
+	- No, those are cluster wide or cluster scoped resources. They cannot be associated to any particular namespace.
+- The resources are categorized as either `namespaced` or `cluster scoped`
+- `Cluster Roles` are roles except they are for a `cluster scoped resources`.
+- Example of cluster scoped resources are `nodes`, `persistent volumes`, `namespaces` or `certificate signing requests`
+- A **cluster-admin** role can add and delete nodes
+- A **storage-admin** role can add and delete storage volumes and volume claims
 - The process is the same as earlier: we create a clusterRole and assign users to it with a ClusterRoleBinding
 - We can create a clusterole for **namespace** resources also, but the user will have access to these resources across **all namespaces**.
 
