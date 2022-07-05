@@ -651,6 +651,8 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 
 # Storage
 
+## Storage in Docker
+In this section, we will take a look at docker Storage driver and Filesystem [GitHub Pages](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/08-Storage/03-Storage-in-Docker.md).
 ## Container Runtime Interface(CRI)
 - The container runtime interface is a standard that defines how an orchestration solution like k8s would communicate with container run times like Docker.
 -If any new container runtime interface is developed, they can simply follow the CRI standards.
