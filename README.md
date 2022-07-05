@@ -599,6 +599,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - You can give users access **to specific resources rather than entire resource lists**, like only allowing read access to a pod named nginx-ingress by adding `resourceNames` Field
 
 ## ClusterRoles and ClusterRoleBindings
+- `Roles` and `Rolebindings` are namespaced meaning they are created within namespaces.
 - As opposed to Roles and RoleBindings, these are cluster-wide and can refer to resources without a namespace, like cluster nodes
 - Resources are either namespaced or cluster-scoped
 - Example of cluster scoped resources are nodes, persistent volumes, namespaces or certificate signing requests
