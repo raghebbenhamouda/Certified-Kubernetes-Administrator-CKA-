@@ -674,14 +674,17 @@ In this section, we will take a look at docker Storage driver and Filesystem [St
 - If persistent storage is attached, we can persist data between containers
 - Same applies to Kubernetes pods
 - We create a volume(inside a node) and mount this volume to the container to store data and make it persistent
-- Kubernetes supports several external distributed storage solution like EBS, CEPH or S3
+- Kubernetes supports several **external distributed storage** solution like **EBS**, **CEPH** or **S3**
 - Availability depends on where you build your cluster
 
 ## Persistent volumes
-- With volumes, each user needs to configure the storage on the pod definition
-- To make storage changes a user would need to recreate the pods
-- A persistent volume is a cluster wide pool of storage **volumes** configured by an administrator to be used by users deploying applications on the Cluster
-- PersistentVolumes allow us to create a large storage volume and let users claim blocks of this storage to use with persistent volume claims
+
+
+- In the large evnironment, with a lot of users deploying a lot of pods, the users would have to configure storage every time for each Pod.
+- Whatever storage solution is used, the users who deploys the pods would have to configure that on all pod definition files in his environment. Every time a change is to be made, the user would have to make them on all of his pods.
+![Alt text](images/persistant_volume.png "apis")
+- A Persistent Volume is a **cluster-wide** pool of **storage volumes** configured by an administrator to be used by users deploying application on the cluster
+- The users can now select storage from this pool using `Persistent Volume Claims`
 - First we generate a persistent volume with a yaml file specifying name, access mode, capacity and storage type
 
 ## Persistent volume claims
