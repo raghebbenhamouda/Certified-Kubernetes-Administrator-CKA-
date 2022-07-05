@@ -633,16 +633,16 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 ![Alt text](images/securiyt_context.png "apis")
 - Docker has the ability to configure security contexts for the containers, like user they run as or kernel capabilites
 - These can also be configured on Kubernetes
-- They can be configured at a container level or at a pod level
+- They can be configured at a c**ontainer level** or at a **pod level**
 - If configured at a container level, they will override the pod-level settings
 - This configuration is added to the container or pod speficication under the securityContext label with tools like runAsUser to set the user to run as
 - Capabilities, like setting NET_ADMIN are only supported at the container level, not at the pod level
 
 ## Network policies
 - By default all pods in the cluster can communicate with any other pod
-- Network policies are objects in Kubernetes that limit network access to and from pods
+- Network policies are objects in Kubernetes that limit network access to and from pods(like security group in AWS)
 - Network policies are attached to one or more pods
-- We link network policies to pods based on **labels**
+- We link network policies to pods based on **labels** and **selectors**
 - first we specify the ingress rule on the network policy
 - When the network policy is created we tag the pod in a way that it will link the policy to the pod
 - Network policies are enforced by your networking provider in the cluster
