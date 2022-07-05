@@ -696,10 +696,13 @@ In this section, we will take a look at docker Storage driver and Filesystem [St
 - We can configure it to clear the data and make the persistent volume available again if the persistent volume is deleted
 
 ## Storage classes
-- When using cloud provider storage we need to provision the storage drive first
-- This is known as static provisioning
-- Storage Classes for cloud providers allow us to dynamically provision storage
-- When using storage classes for cloud providers, we no longer need persistent volume declarations, only persistent volume claims, and the storage class handles the persistent volume creation
+- We discussed about how to create Persistent Volume and Persistent Volume Claim and We also saw that how to use into the Pod's volume to claim that volume space.
+- We created Persistent Volume but before this if we are taking a volume from Cloud providers like GCP, AWS, Azure. We need to first create disk in the Google Cloud as an example.
+
+
+- We need to create manually each time when we define in the Pod definition file. that's called Static Provisioning.
+- No we have a `Storage Class`, So we no longer to define Persistent Volume. It will create automatically when a Storage Class is created. It's called `Dynamic Provisioning`.
+![Alt text](images/storage_class.png "apis")
 - For each storage class we can use different types of drives that these providers offer. This depends on what your cloud provider offers
 
 # Networking
