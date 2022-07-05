@@ -611,23 +611,26 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - We can create a clusterole for **namespace** resources also, but the user will have access to these resources across **all namespaces**.
 
 ## Service accounts
-- Kubernetes has 2 types of accounts: User and Service accounts
-- User accounts are for humans, like administrators or developers
-- Service accounts are for programs to access API resources like prometheus pulling performance metrics from the Kubernetes API
+- Kubernetes has 2 types of accounts: `User` and `Service accounts`
+- `User accounts` are for humans, like administrators or developers
+- `Service accounts` are for programs to access API resources like prometheus pulling performance metrics from the Kubernetes API
 - ServiceAccounts use a token to access the cluster
 - The token is created when the ServiceAccount is created and is stored as a secret
-- Secrets for ServiceAccounts can be automatically mounted into pods to be used by applications **if the application is hosted on the k8s cluster**
+- **if the application is hosted on the k8s cluster**: Secrets for ServiceAccounts can be automatically mounted  as a volume inside the pod to be used by applications, no need to create a **service accounts** 
+- That way, the token to access the Kubernetes API is already placed inside the pod and can be easily read by the application.
 - Each namespace has its default service account named **default**
 - When a pod is created, The **default service account** and its **token** **are automatically mounted to that pod as a volume mount**
 - The default service account is **restricted**, It only has permission to run **basic common API queries**.
 
 ## Securing image
+![Alt text](images/private_registry.png "apis")
 - By default Kubernetes pulls images from the docker registry(Example: **Image: nginx** is in fact **image: docker.io/library/nginx** where library can be replaced with the docker user account)
 - We can also use a private registry to pull images from as you may want to make your images private
 - Kubernetes has a special **secret type named docker-registry** which allows kubernetes to pull images from private registries
 - This needs to be attached to the pod as imagePullSecret so it can pull images from the private registry for that pod
 
 ## Security contexts
+![Alt text](images/securiyt_context.png "apis")
 - Docker has the ability to configure security contexts for the containers, like user they run as or kernel capabilites
 - These can also be configured on Kubernetes
 - They can be configured at a container level or at a pod level
