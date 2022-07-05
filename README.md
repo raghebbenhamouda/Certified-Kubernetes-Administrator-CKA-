@@ -698,11 +698,9 @@ In this section, we will take a look at docker Storage driver and Filesystem [St
 ## Storage classes
 - We discussed about how to create Persistent Volume and Persistent Volume Claim and We also saw that how to use into the Pod's volume to claim that volume space.
 - We created Persistent Volume but before this if we are taking a volume from Cloud providers like GCP, AWS, Azure. We need to first create disk in the Google Cloud as an example.
-
-
 - We need to create manually each time when we define in the Pod definition file. that's called Static Provisioning.
-- No we have a `Storage Class`, So we no longer to define Persistent Volume. It will create automatically when a Storage Class is created. It's called `Dynamic Provisioning`.
 ![Alt text](images/storage_class.png "apis")
+- No we have a `Storage Class`, So we no longer to define Persistent Volume. It will create automatically when a Storage Class is created. It's called `Dynamic Provisioning`.
 - For each storage class we can use different types of drives that these providers offer. This depends on what your cloud provider offers
 
 # Networking
