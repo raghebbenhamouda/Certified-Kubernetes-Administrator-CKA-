@@ -706,17 +706,25 @@ In this section, we will take a look at docker Storage driver and Filesystem [St
 # Networking
 
 ## Switching
-![Alt text](images/securiyt_context.png "apis")
-- How computer A connect to B: we connect them to a `switch`, and the switch creates a `network` containing the two systems.
+![Alt text](images/switching.png "apis")
+- How computer **A** connect to **B**: we connect them to a `switch`, and the switch creates a `network` containing the two systems.
 - To connect them to a switch. we need an `interface` on each host, `physical` or `virtual`, depending on the host.
 - `ip link`: list and modify interfaces on the host
 - `ip addr`: show the ip addresses assigned to those interfaces
 - `ip addr add 192.168.1.10/24 dev eth0 `: to set IP addresses on the interfaces.
 
 ## Routing
+![Alt text](images/routing.png "apis")
+- A `router` helps connect two networks together.
+- It gets **two IPs** assigned, **One on each network**
 - `ip route`: to view the routing table
 - `ip route add 192.168.1.0/24 via 192.168.2.1`: to add entries into the routing table.
-- `cat /proc/sys/net/ipv4/ip_forward`:  check if IP forwarding is enabled on a host( Example: eth0 forward to eth1)
+
+## Setup a Linux Host as a Router
+![Alt text](images/linux_host.png "apis")
+- How to get **C** to reach **A** ?
+- We need to tell host A that the gateway to **network two** is through `host B` and we do that by adding a routing table entry.
+- `cat /proc/sys/net/ipv4/ip_forward`:  check if IP forwarding is enabled on a host( Example: **eth0 forward to eth1**)
 - **PS**: change made using these commands are **only valid till a restart**. If you want to persist these changes you must set them in the /etc/network/interfaces file
 
 
