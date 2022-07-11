@@ -810,7 +810,7 @@ by default and each device connecting to this network get their own internal pri
 - Kubernetes with docker creates containers without networking, It then invokes the configured CNI plugins who takes care of the rest of the configuration
 
 ## Cluster networking
-![Alt text](images/networking_ports.png "apis"
+![Alt text](images/networking_ports.png "apis")
 - Each node must have at least 1 interface connected to a network. Each interface must have an address configured.
 - The `master node` on a cluster needs to accept requests for the api-server on port `6443`
 - Any node that's running a `kubelet` needs to allow connections to port `10250`
