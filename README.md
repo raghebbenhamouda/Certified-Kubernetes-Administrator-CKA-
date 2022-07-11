@@ -727,8 +727,18 @@ In this section, we will take a look at docker Storage driver and Filesystem [St
 - `cat /proc/sys/net/ipv4/ip_forward`:  check if IP forwarding is enabled on a host( Example: **eth0 forward to eth1**)
 - **PS**: change made using these commands are **only valid till a restart**. If you want to persist these changes you must set them in the /etc/network/interfaces file
 
+## DNS
+[DNS in Linux](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/09-Networking/03-Pre-requisite-DNS.md)
+
+## coreDNS
+In this section we will see how `to configure a host as a DNS server` [coreDNS](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/09-Networking/04-Pre-requisite-CoreDNS.md)
 
 ## Network namespaces
+### Process Namespace
+![Alt text](images/process_namespaces.png "apis")
+-  Containers are `separated` from the `underlying host` using namespaces.
+
+
 - Used to implement network isolation between elements like containers 
 - A network namespace cannot see what happens in other namespaces unless configured, it  can have its own virtual interfaces, routing and other tables.
 - We can connect different namespaces if we want to
