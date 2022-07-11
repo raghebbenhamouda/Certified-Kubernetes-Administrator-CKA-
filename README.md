@@ -766,7 +766,13 @@ In this section we will see how `to configure a host as a DNS server` [CoreDNS](
 - To create a network you need a switch. So we need a **virtual switch**, then we connect the namespaces to it.
 - We add a new `interface` to the host using the **iplink** command with the type set to `bridge`
 - For our host , it is just **another interface**
-- 
+
+![Alt text](images/linux_bridge_1.png "apis")
+- To make this virtual network reachable from the host we need to assign it an IP address
+- This entire network is still **private** and restricted within the **host** within the **namespaces**
+- The only door to the outside world is the **eth0** Ethernet port on the host
+![Alt text](images/linux_bridge_2.png "apis")
+- So how do we configure this bridge to reach the LAN network through the Ethernet port?
 ### Network Namespce Commands
 - `ip netns add`: to creat a network namespace
 - `ip -n blue link `: list interfaces that belong to **blue namespace**
@@ -775,9 +781,18 @@ In this section we will see how `to configure a host as a DNS server` [CoreDNS](
 - `ip addr -n red add 192.168.15.1 dev veth-red`: to assign ip to a namespace(red)
 
 ## Docker networking
-- Docker containers have their own network namespace(one network namespace for each container)
-- We have many options for docker networking: no networking, use the host network, or create your own internal network bridge to get a private network inside the system
-- When a container in a new network is created, a bridge network namespace is created on the host
+- Docker containers have their own `network namespace`(one network namespace for each container)
+- We have many options for docker networking:
+ 	- `none`: the container is not attached to any network 
+ 	- `host network`:the container is attached to the **host’s network**(there is no network isolation between the host and the container)
+ 	-  `Bridge`: an i**nternal private network** is created which the docker host and containers attach to. The network has an address `172.17.0.0`
+by default and each device connecting to this network get their own internal private network addresson this network
+![Alt text](images/bridge_network.png "apis")
+- When a c**ontainer is created**:
+ 	-   **a bridge network namespace** is created on the host
+ 	-   Creates a **pair of interfaces**
+ 	-   Attaches one end to t**he container** and another end to the bridge network
+
 - We can map host ports to container ports to make program available from outside the docker host
 
 ## Container Networking Interface
