@@ -730,23 +730,44 @@ In this section, we will take a look at docker Storage driver and Filesystem [St
 ## DNS
 [DNS in Linux](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/09-Networking/03-Pre-requisite-DNS.md)
 
-## coreDNS
-In this section we will see how `to configure a host as a DNS server` [coreDNS](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/09-Networking/04-Pre-requisite-CoreDNS.md)
+## CoreDNS
+In this section we will see how `to configure a host as a DNS server` [CoreDNS](https://github.com/raghebbenhamouda/certified-kubernetes-administrator-course/blob/master/docs/09-Networking/04-Pre-requisite-CoreDNS.md)
 
 ## Network namespaces
 ### Process Namespace
 ![Alt text](images/process_namespaces.png "apis")
--  Containers are `separated` from the `underlying host` using namespaces.
+-  Containers are **separated** from the `underlying host` using **namespaces**.
+-  Namespaces: If the host was a house, then namespaces are the rooms within the house that you assign to each of your children.
+- The room helps in providing privacy to each child. Each child can only see what's within his or her room.
+- However, as **a parent**, you have **visibility** into all the rooms in the house as well as other areas of the house.
+- If we wish, you can establish **connectivity** between **two rooms** in the house.
+- When we create a container, we want to make sure that it is isolated, that it does not see any other processes on the host or any other containers.
+- So we create a **special room** for it on our **host** using a **namespace**.
+- As far as the container is concerned, it only sees the processes run by it and thinks that it is on its own Host.
+- The **underlying host** has visibility into all of the processes, including those running inside the containers.
 
-
+### Network Namespace
+![Alt text](images/network_namespaces.png "apis")
 - Used to implement network isolation between elements like containers 
-- A network namespace cannot see what happens in other namespaces unless configured, it  can have its own virtual interfaces, routing and other tables.
+- A network namespace cannot see what happens in other namespaces unless configured, it  can have its own `virtual interfaces`, `routing and other tables`.
 - We can connect different namespaces if we want to
 - There is a parent process able to see information in all namespaces
-- Every host in a namespace has its own routing table and ARP table, independent from the parent host
+- Every `host` in a `namespace` has its own **routing table** and **ARP table**, **independent** from the **parent host**
 - Interfaces are different for every network namespace. We have a loopback interface for each network namespace
-- We can connect two network namespaces with a virtual connection(virtual ethernet cable with tow interfaces) to which we will assign IP addresses
+
+### Connect two Network Namespace Using Virtual Connection
+![Alt text](images/connect_two_namespaces.png "apis")
+- We can connect two network namespaces with a `virtual connection`(virtual ethernet cable with tow interfaces) to which we will assign IP addresses
 - We can also create virtual elements like Vswitches(an interface for the host and a switch for the namespace) to connect interfaces on different namespaces
+
+### Connect Network Namespcaes using Linux Bridge
+![Alt text](images/linux_bridge.png "apis")
+- We create a **virtual network** inside your host
+- To create a network you need a switch. So we need a **virtual switch**, then we connect the namespaces to it.
+- We add a new `interface` to the host using the **iplink** command with the type set to `bridge`
+- For our host , it is just **another interface**
+- 
+### Network Namespce Commands
 - `ip netns add`: to creat a network namespace
 - `ip -n blue link `: list interfaces that belong to **blue namespace**
 - `ip link add veth-red type veth peer name veth-blue`: to create the **cable(virtual connection)** 
