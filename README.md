@@ -796,21 +796,28 @@ by default and each device connecting to this network get their own internal pri
 - We can map host ports to container ports to make program available from outside the docker host
 
 ## Container Networking Interface
+![Alt text](images/cni.png "apis")
 - Kubernetes creates a **network** that connects all the nodes together
 - CNI defines the rules a networking provider needs to support in terms of API calls to standardize interaction with any container management tool that supports the CNI standard
+- CNI is a set of standards that define how programs should be developed to solve networking challenges in a `container runtime environment`
+- The programs are referred to as `plugins`
+- In this case bridge program that we have been referring to is a plugin for CNI
+- CNI defines how the plugin should be developed and how container run times should invoke them
+- CNI specifies that it is responsible for **creating a network namespace for each container**
 - This middle layer allows any supported network manager to work with any supported container management software interchangeably
-- CNI specifies a set of tasks a networking plugin has to support when interacting with the CNI API
-- Docker does not support CNI, it follows its own standard, and thus external network plugins like Flannel do not work with Docker
+- CNI specifies a set of tasks a **networking plugin has to support when interacting with the CNI API**
+- **Docker does not support CNI**, it follows its own standard, and thus external network plugins like Flannel do not work with Docker
 - Kubernetes with docker creates containers without networking, It then invokes the configured CNI plugins who takes care of the rest of the configuration
 
 ## Cluster networking
+![Alt text](images/networking_ports.png "apis"
 - Each node must have at least 1 interface connected to a network. Each interface must have an address configured.
-- The master node on a cluster needs to accept requests for the api-server on port 6443
-- Any node that's running a kubelet needs to allow connections to port 10250
-- Additionally the master needs to allow access to port 10251 and 10252 for kube-scheduler and kube-controllermanager respectively
-- Worker nodes require ports 30000-32767 for services to be open
-- etcd server listens on port 2379
-- If we have HA etcd we need 2380 for etcd clients to communicate with the other master nodes
+- The `master node` on a cluster needs to accept requests for the api-server on port `6443`
+- Any node that's running a `kubelet` needs to allow connections to port `10250`
+- Additionally the master needs to allow access to port `10251` and `10252` for kube-scheduler and kube-controllermanager respectively
+- Worker nodes require ports `30000-32767` for services to be open
+- `etcd server` listens on port `2379`
+- If we have `HA etcd `we need `2380` for etcd clients to communicate with the other master nodes
 
 ## Pod networking
 - Every pod gets its unique IP address
