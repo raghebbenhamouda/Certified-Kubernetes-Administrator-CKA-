@@ -824,10 +824,19 @@ by default and each device connecting to this network get their own internal pri
 	- How are the pods addressed?
 	- How do they communicate with each other?
 	- How do you access the services running on these pods `internally` from within the cluster as well as `externally` from outside the cluster?
+- As of today, Kubernetes **does not come** with a `built-in` solution for this. It expects us to implement a `networking solution` that solves these challenges
+- The nodes are part of an `external network` and has IP addresses `192.168.1.0`
+### Part-1: Connect Pods within the same Node
+![Alt text](images/pod_communication.png "apis")
+When containers are created:
+	1. Kubernetes creates `network namespaces` for them to enable communication between them 
+	2. We create a `bridge network` on each node, And then bring them **up**
+	3. Assign an `IP address` to the interfaces or networks. Choose any private address range: `10.244.1.0/24` ,`10.244.2.0/24`, `10.244.3.0/24` 
+	4. Set the IP address for the `bridge interface` 
 
-- As of today, Kubernetes does not come with a built in solution for this.
+==> The pods all get their own **unique** IP address and are able to communicate with each other on their own nodes
 
-It expects you to implement a networking solution that solves these challenges.
+
 - Every pod gets its unique IP address
 - Every pod should be able to communicate with any other pod in the same node with its IP address
 - Every pod should be able to communicate with any other pod in other nodes without using NAT with its IP address
