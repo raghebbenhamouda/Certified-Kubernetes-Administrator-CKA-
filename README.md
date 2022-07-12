@@ -882,24 +882,26 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 
 ## IP address management in Kubernetes
 - The CNI plugin is responsible for assigning IP addresses to pods
-- CNI handles this with the host-local plugin(get-free-ip-from-host)
-- WeaveWorks handles this transparently for us
+- CNI handles this with the `host-local` and `DHCP` plugin(get-free-ip-from-host)
+- Weave handles this transparently for us
 
-## Service networking
-- Until now we have talked about networking between individual pods
-- We usually want to use a service to access a set of pods
-- Service is just a virtual object
-- A service is accessible across the cluster(not bound to a specific node) by any other resource using a ClusterIP
-- We can also export the service externally with NodePort(exposes the application on a port on all nodes in the cluster that external users or applications have access to)
-- Each node runs a Kube-proxy component. Kube-proxy watches the changes in the cluster through the api-server and every time a new service is created, Kube-proxy
-gets into action
+## Service networking 
+![Alt text](images/kube_proxy.png "apis") 
+- Until now we have talked about networking **between individual pods**
+- We usually want to use a **service to access a set of pods**
+- Service is just a `virtual object`, that is accessible **across the cluster** by any other resource using a **ClusterIP**
+- We can also export the service externally with NodePort(like clusterIp but it exposes the application on a port on all nodes in the cluster that external users or applications have access to)
+- Each node runs a `Kube-proxy` component
+- Kube-proxy watches the changes in the cluster through the api-server and every time a **new service is created**, Kube-proxy gets into action
 - Every time a pod is created the kublete invokes the CNI to make the necessary network changes and kube-proxy communicates the changes to the rest of the cluster nodes
-- When created a service object is assigned an IP address from a predefined range, the Kube-proxy components running on each node gets that IP address and creates forwarding rules on each node in the cluster,  any traffic coming to this IP(the IP of the service) should go to the IP of the pod.
-- the kube-proxy component creates and deletes these rules.
+- When we create a `service object`, It is assigned an `IP address` from a **predefined range**
+- The `Kube-proxy` components running on each node gets that IP address and creates forwarding rules on each node in the cluster
+- **Any traffic coming to this IP(the IP of the service) should go to the IP of the pod**
+- the kube-proxy component **creates** and **deletes** these rules.
 - NodePort is a combination of IP and port to forward to a correct pod
-- kube-proxy works using iptables by default
+- kube-proxy works using `iptables` by default
 - You can list iptables rules on a node and check its configuration, as all rules have a comment on what they do
-- These rule changes are logged to the kube-proxy log file.
+- These rule changes are logged to the `kube-proxy` log file.
 
 ## DNS in Kubernetes
 - Each node in the cluster has a DNS name and IP address
