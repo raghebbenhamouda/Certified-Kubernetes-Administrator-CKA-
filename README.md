@@ -820,6 +820,14 @@ by default and each device connecting to this network get their own internal pri
 - If we have `HA etcd `we need `2380` for etcd clients to communicate with the other master nodes
 
 ## Pod networking
+- These are challenges that Kubernetes expects you to solve: 
+	- How are the pods addressed?
+	- How do they communicate with each other?
+	- How do you access the services running on these pods `internally` from within the cluster as well as `externally` from outside the cluster?
+
+- As of today, Kubernetes does not come with a built in solution for this.
+
+It expects you to implement a networking solution that solves these challenges.
 - Every pod gets its unique IP address
 - Every pod should be able to communicate with any other pod in the same node with its IP address
 - Every pod should be able to communicate with any other pod in other nodes without using NAT with its IP address
