@@ -859,17 +859,13 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - Every pod should be able to communicate with any other pod in other nodes without using NAT with its IP address
 - There are many networking solutions we can implement, like flannel, cilium or weaveworks that take care of these requirements transparently. These are Container Network Interface-compliant plugins
 
-## Container Networking Interface in Kubernetes
+## Container Networking Interface in Kubernetes 
+![Alt text](images/cni_config.png "apis") 
 - Networking in Kubernetes is managed by a CNI plugin
-- When a container is cretead:
-	- 1: **Container Runtime must create network namespace**
-	- 2: **Identify network the container must attach to**
- 	- 3: **Container Runtime to invoke Network Plugin (bridge) when container is ADDed.**
- 	- 4: **Container Runtime to invoke Network Plugin (bridge) when container is DELeted.**
-	- 5: **JSON format of the Network Configuration**
-
+- The network plugins set to `CNI` 
+- The `CNI bin` directory has all the supported `CNI plugins` as executables. Such as the bridge, dhcp, flannel etc
+- The `CNI-conf` directory : this is where kubelet looks to find out which plugin needs to be used.
 - This CNI plugin is configured in the Kubelet configuration file for each node
-- We can see these options by seeing the configuration of the kubelet service
 
 ## Weave CNI solution
 - Example of a networking solution on Kubernetes
