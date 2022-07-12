@@ -868,7 +868,7 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - This CNI plugin is configured in the Kubelet configuration file for each node
 
 ## Weave CNI solution 
-![Alt text](images/weave_cni.png "apis") 
+![Alt text](images/weave_cin.png "apis") 
 - Example of a networking solution on Kubernetes
 - Weave deploys an `agent` on **each node**
 - They communicate with each other to exchange information **regarding the nodes and networks and PODs** within them.
