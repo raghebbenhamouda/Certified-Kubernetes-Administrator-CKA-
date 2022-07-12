@@ -828,7 +828,7 @@ by default and each device connecting to this network get their own internal pri
 - The nodes are part of an `external network` and has IP addresses `192.168.1.0`
 ### Part-1: Connect Pods within the same Node
 ![Alt text](images/pod_communication.png "apis")
-When containers are created:
+- When containers are created:
 	- 1. Kubernetes creates `network namespaces` for them to enable communication between them 
 	- 2. We create a `bridge network` on each node, And then bring them **up**
 	- 3. Assign an `IP address` to the interfaces or networks. Choose any private address range: `10.244.1.0/24` ,`10.244.2.0/24`, `10.244.3.0/24` 
@@ -839,15 +839,15 @@ When containers are created:
 ![Alt text](images/simple_routes_nodes.png "apis")
 As of now, the **blue** pod has no idea where the address `10.244.2.2` is because it is on a **different network**. So it routes to **Node01** as it is the default gateway node. **Node01** doesn't know either since 10.244.2.1 is a **private** network.
 - Add a route to `node01` routing table to route traffic to `10.244.2.2`
-- Similarly, we configure `route` on **all host** to all the **other hosts** with information regarding the respective networks within them
+- Similarly, we configure `route` on **all host** to all the **other hosts** with information regarding the respective networks within them </br>
 ==> This works fine in this simple setup, but this will require a lot more configuration whenthe underlying network architecture gets **complicated**
-![Alt text](images/pod_communication.png "apis")
+![Alt text](images/pod_router.png "apis")
 - Instead of having to configure `routes` on each server, a better solution is to do that on a `router`
 - If we have one `router` in our network and **point all hosts** to use that as the `default gateway`
 - The **individual** virtual networks we created with the address `10.244.1.0/24` on each node now form a **single large network** with the address 10.244.0.0/16`
 
 ==> We performed a number of **manual steps** to get the environment ready. We then wrote a `script` that can be run for each container that performs the necessary steps required to connect each container to the network. So how do we **run the script automatically** when a port is created on Kubernetes?
-### CNI
+### Solution: CNI
 ![Alt text](images/cni_pod_netwroking.png "apis") 
 - `CNI` tells Kubernetes that this is how you should call a script as soon as you create a container
 -  `CNI` tells us This is how your script should look like.
