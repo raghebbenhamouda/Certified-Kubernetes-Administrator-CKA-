@@ -867,12 +867,17 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - The `CNI-conf` directory : this is where kubelet looks to find out which plugin needs to be used.
 - This CNI plugin is configured in the Kubelet configuration file for each node
 
-## Weave CNI solution
+## Weave CNI solution 
+![Alt text](images/weave_cni.png "apis") 
 - Example of a networking solution on Kubernetes
-- Weave deploys an agent on each node, and they all share information about network setup on their nodes. They keep track of network status of the cluster
-- Weave creates its own interface bridges to communicate
-- When a packet needs to go to another node, it goes through Weave, and it makes the decision to where it needs to go
+- Weave deploys an `agent` on **each node**
+- They communicate with each other to exchange information **regarding the nodes and networks and PODs** within them.
+- Each agent stores a **topology of the entire setup**, that way they know **the pods and their IPs on the other nodes**.
+- They keep track of network status of the cluster
+- Weave creates its **own interface bridges** and name it `weave`
+- When a packet needs to go to another node, it goes through `Weave agent`, and it makes the decision to where it needs to go
 - Packets are encapsulated and sent to the target node
+- Once on the other side, the other `weave agent` retrieves the `packet`, **decapsulates** and **routes** it to the right POD.
 - It is deployed as a daemonset, so a copy of weave is executed in each node as a pod
 
 ## IP address management in Kubernetes
