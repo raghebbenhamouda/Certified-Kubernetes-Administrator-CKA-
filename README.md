@@ -904,7 +904,7 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - These rule changes are logged to the `kube-proxy` log file.
 
 ## DNS in Kubernetes
-- Each node in the cluster has a DNS name and IP address
+- Each node in the cluster has a `DNS name` and `IP address`
 - Pods and services within the cluster get a DNS name and IP address
 - If we are on the same namespace, we can call a service by just using its name, like https://service-name. If the namespace is different, we add a top-level domain using the namespace name, https://service-name.namespace
 - Services get grouped using an svc domain block, https://service-name.namespace.svc
