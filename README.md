@@ -904,25 +904,28 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - These rule changes are logged to the `kube-proxy` log file.
 
 ## DNS in Kubernetes
+![Alt text](images/dns_k8s.png "apis") 
 - Each node in the cluster has a `DNS name` and `IP address`
-- Pods and services within the cluster get a DNS name and IP address
+- Pods and services **within** the cluster get a `DNS name` and `IP address`
 - If we are on the same namespace, we can call a service by just using its name, like https://service-name. If the namespace is different, we add a top-level domain using the namespace name, https://service-name.namespace
 - Services get grouped using an svc domain block, https://service-name.namespace.svc
-- Fully-qualified fomain names are grouped under a top-level domain, cluster.local by default, which we can refer to as https://service-name.namespace.svc.cluster.local
-- We can do the same for pods, but using the IP with dashes as a name and changing svc for pod
-- DNS records for PODs are not created by default. But we can enable that explicitly
+- Fully-qualified domain names are grouped under a top-level domain, cluster.local by default, which we can refer to as https://service-name.namespace.svc.cluster.local
+- We can do the same for pods, but using the IP with dashes as a name and changing **svc** for **pod**
+- **DNS records for PODs are not created by default. But we can enable that explicitly**
 
 ## CoreDNS
-- In-cluster DNS is managed by CoreDNS, a central DNS server in the cluster
-- Pods are all pointed to the CoreDNS pod as a DNS server
-- When a pod is created, an entry is added to CoreDNS for resolution using its IP
-- For services it uses the service name
-- Deployed as 2 pods for fault toleration
-- CoreDNS uses a configuration file named Corefile, under `/etc/coredns by default`
+![Alt text](images/core_dns.png "apis") 
+- In-cluster DNS is managed by `CoreDNS`, a central DNS server in the cluster
+- Pods are all pointed to the `CoreDNS` pod as a **DNS server**
+- When a pod is created, an entry is added to CoreDNS for resolution using its IP()
+- For `services` it uses the **service name**
+- For `pods` it forms **hostnames** by replacing dots with dashes in the IP address of the pod
+- CoreDNS is deployed as **2 pods** for fault toleration
+- CoreDNS uses a **configuration file** named `Corefile`, under `/etc/coredns` by default
 - The pod records are disabled by default, can be enabled by adding `pods insecure` to the kubernetes configuration block in the Corefile
 - CoreDNS watches for changes in the cluster and adds or deletes DNS entries accordingly
-- **exposed through the kube-dns service, the ip addr of this service is configured as the nameserver on pods**
-- The information about the DNS server cluster IP and top-level domain is stored in the Kubelet configuration in the worker nodes
+- **CoreDNS pods** are exposed through the `kube-dns service`, **the IP addr of this service is configured as the nameserver on pods**
+- The information about the `DNS server` `cluster-IP` and `top-level domain` is stored in the `Kubelet configuration` in the worker nodes
 - services can answer DNS queries by just using their service name. Pods require the fully qualified domain name
  
 ## Ingress
