@@ -969,37 +969,43 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - Define the purpose that this cluster will have, like education or production
 - Check the cloud adoption level in your company, maybe you want the cluster on-premise
 - Workloads that will run on the cluster, hardware requirements, network traffic levels
-- Production workloads would require a multi-master setup if on-premise
-- Development clusters can be single-node, as they are volatile and non-critical
-- Large clusters may want to separate the etcd servers to their own instances
+- `Production workloads` would require a **multi-master** setup if **on-premise**
+- `Development clusters` can be **single-node**, as they are volatile and non-critical
+- **Large clusters may want to separate the etcd servers to their own instances**
 
 ## Choosing Kubernetes infrastructure
 - Kubernetes can be deployed in a lot of environments, from a laptop to a cloud environment
 - Kubeadm can automate a lot of work of on-prem cluster setup in Linux. It is not an available option on Windows
 - We can also use tools like Minikube, k3s or rancher, which automatically set up working Kubernetes clusters
-- Turnkey solutions like OpenShift, where you provision the environment and maintain it, or Hosted solution where your cluster is set up by your provider like AWS or GCE
+
+![Alt text](images/infra_k8s.png "apis") 
+- `Turnkey solutions` like OpenShift, where you provision the required **VMs** and use some kind of tools or scripts to configure kubernetes cluster on them.
+- `Hosted solution` where your cluster is set up by your provider like AWS or GCE
+- `OpenShift` is an **open source** container application platform and is built on top of kubernetes. It provides a set of additional tools and a nice **GUI** to create and manage kubernetes constructs and easily integrate with CI/CD pipelines etc.
 
 ## High availability Kubernetes
 - If a master node is lost, as long as the workers are up, they will keep service until they start failing
-- When failed, as the master is unavailable, applications do not self-heal
-- To avoid this we should consider a multimaster Kubernetes setup
-- Available in an active-active configuration
+- When failed, as the **master** is unavailable, applications do not self-heal
+- To avoid this we should consider a `multi-master` Kubernetes setup in a **Production environment**
+- Available in an **active-active**(the two master nodes run at the same time) configuration
 - Clustering or load balancing depends on what element we are tackling
-- We will configure a load balancer that splits traffic between the kube-apiserver instances so we do not duplicate kubectl commands
-- kube-scheduler and kube-controllermanager might duplicate resources if ran in parallel, so they run in an active-passive mode where only one runs at the same time, controlled by the leader-elect variable when starting kube-apiserver
-- etcd can be configured either on the master nodes (stacked), or on their own nodes (external), which means a failed master node will not result in a lost etcd server state
+- We will configure a `Load balancer` that splits traffic between the kube-apiserver instances so we do not duplicate kubectl commands
+- `kube-scheduler` and `kube-controllermanager` might **duplicate resources if ran in parallel**, so they run in an **active-passive** mode where only one runs at the same time, controlled by the `leader-elect` variable when starting kube-apiserver
+- `etcd` can be configured either on the master nodes **(stacked)**, or on their own nodes **(external)**, which means a failed master node will not result in a lost etcd server state
 - kube-apiserver has a configuration pointer to the etcd servers, and it will read and write from any of the available etcd instances
 
 ## High availability ETCD
-- etcd allows us to have a distributed data format, allowing us to read and write data from any of the instances
-- etcd keeps data consistent in its database by delegating writes to a master
+- etcd allows us to have a **distributed data format**, allowing us to **read and write** data from **any** of the instances
+- etcd keeps data **consistent** in its database by **delegating writes to a master**
 - If a write enters through a slave node, the write is forwarded to the master, then it is distributed to the slaves
-- When the cluster is set up, a master is elected randomly, which handles writes
-- After this, a keepalive is continually sent. If it is not recieved for some time, the rest of the nodes will elect a new master
-- A write is considered complete if it is written to the majority of the nodes of the cluster, considered a quorum, (numberOfNodes / 2) + 1
+- When the cluster is set up, a master is elected **randomly**, which handles writes
+- After this, a **keepalive** is continually sent. If it is not recieved for some time, the rest of the nodes will elect a new master
+- A write is considered **complete** if it is written to **the majority of the nodes of the cluster**, considered a `quorum, (numberOfNodes / 2) + 1`
 - If you have 2 instances of etcd, the quorum is still 2 and it cannot be met, so we need at least 3 instances of etcd in the cluster
+- So having 2 instances is like having one instance it doesn't offer you any real value as quorum cannot be met. Which is why it is recommended to have a minimum of **3 instances** in an ETCD cluster. That way it offers a fault tolerance of at least **1 node**.
+- If you lose one, you can still have quorum and the cluster will continue to function.
 - Our fault tolerance is calculated by subtracting the quorum from the total nodes in the cluster
-- We should always choose an odd number of nodes, as an even number of instances can lead to a lock situation
+- We should always choose an **odd number of nodes**, as an even number of instances can lead to a **lock situation**
 
 # Troubleshooting
 
