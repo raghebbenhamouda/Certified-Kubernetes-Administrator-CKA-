@@ -960,7 +960,7 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - Rules are applied consecutively until one matches 
 
 ![Alt text](images/host_vs_path_ingress.png "apis") 
-- We create a host for each **domain** and a we route the traffic based on **paths** 
+- We create a host for each **domain** and a we route the within the traffic domain based on **paths** 
 
 # Designing a Kubernetes cluster
 
