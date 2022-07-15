@@ -929,23 +929,38 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - services can answer DNS queries by just using their service name. Pods require the fully qualified domain name
  
 ## Ingress
-- Service NodePorts require us to use a port over 35000 that has to be in the URL unless you use a proxy
-- If we are on a cloud provider we can use a LoadBalancer type Service, which allows the requests to enter through a cloud load balancer that handles routing
+- Service NodePorts require us to use a port over 35000 that has to be in the URL unless you use a **proxy(forward requests on port 80 to port 38080 on your nodes)**
+- If we are on a cloud provider we can use a `Network LoadBalancer` type Service, which allows the requests to enter through a **Cloud Loadbalancer** that handles routing
 - If we add more services, we need more load balancers, which can get expensive, and configuring SSL gets complicated
-- Ingress helps users access application using a single Externally accessible URL, that you can configure to route to different services within your cluster
-based on the URL path, At the same time implement SSL security as well.
-- Ingresses are **scalable layer 7 load balancers** that are native to Kubernetes
-- Still needs to be exposed through a cloud load balancer or through a nodePort, but after that all configuration lives in Kubernetes
-- We deploy an ingress controller (nginx, haproxy, traefik), and ingress resources (routing rules)
-- **Ingress controllers are not just a 7 layer load balancer, they have intelligence built in to monitor the cluster in order to detect new rules and resources automatically**
-- We do not have an Ingress Controller on Kubernetes by default. So we must deploy one like : GCE(Google layer 7 LB), Nginx..
-- A special build of nginx is used for the nginx ingress controller
-- Settings are stored inside a configmap
+- Ingress helps users access application using a **single Externally accessible URL**, that you can configure to route to **different services** within your cluster based on the URL path, At the same time implement **SSL security** as well.
+- Ingresses are **scalable layer 7 load balancers** that are **native to Kubernetes**
+
+![Alt text](images/ingress.png "apis") 
+- Ingress needs to be **exposed** through a `Cloud Load balancer` or through a `nodePort`, but after that all configuration lives in Kubernetes
+- We deploy an `Ingress Controller` (nginx, haproxy, traefik), and `Ingress Resources`(routing rules)
+- Ingress Resources are created using **definition files** like pods deployments and services
+
+### Ingress Controller
+![Alt text](images/ingress_controller.png "apis") 
+- **Ingress controllers are not just a 7 layer load balancer, they have intelligence built-in to monitor the cluster in order to detect new rules and resources automatically**
+- We do not have an `Ingress Controller` on Kubernetes **by default**. So we must deploy one like : `GCE(Google layer 7 LB)`, `Nginx`..
+- To deploy an `Ingress Controller` we need a : 
+ 	- `Deployment` of the `nginx-ingress` image,
+ 	- `Service` to expose it
+ 	- `ConfigMap` to feed nginx configuration data
+ 	- `Service account` with the right permissions to access all of these objects.
 - We need to provice the namespace, name and ports that the ingress controller will use
-- After the ingress controller is created we will add ingress rules, which will route traffic depending on rules like domain name or visited URL
+
+### Ingress Rules
+![Alt text](images/ingress_rules.png "apis") 
+- After the ingress controller is created we will add ingress rules, which will route traffic depending on rules like domain name
+-  We have rules at the top for **each host** or **domain name** and **within** each rule you have different paths to route traffic based on **the URL**.
 - Kind is Ingress, and on spec we will specify what pod or pods we will target depending on our rules
 - We can see these rules with `kubectl get ingress`
-- Rules are applied consecutively until one matches
+- Rules are applied consecutively until one matches 
+
+![Alt text](images/host_vs_path_ingress.png "apis") 
+- We create a host for each **domain** and a we route the traffic based on **paths** 
 
 # Designing a Kubernetes cluster
 
