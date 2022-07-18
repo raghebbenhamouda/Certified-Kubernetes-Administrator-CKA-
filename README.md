@@ -1010,13 +1010,15 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 # Troubleshooting
 
 ## Application failure
-- Think about a chart depicting how your application interacts and check every link on the chain
-- Check accessibility to a pod
-- Check pod events
-- Check pod restarts
-- CHeck pod logs (current and previous)
+![Alt text](images/two_tier.png "apis") 
+Let's troubleshoot a **two tier application** that has a web and a database server:
+- Think about a chart depicting how your application interacts and **check every link on the chain**
+- Check **accessibility** to a pod
+- Check **pod events**
+- Check **pod restarts**
+- CHeck **pod logs** (current and previous)
 - Check target port configurations
-- Check target service name configurations
+- Check **target service** name configurations
 - Check target service selectors
 - Check deployment and pod environment variables
 - Check exposed port configuration
