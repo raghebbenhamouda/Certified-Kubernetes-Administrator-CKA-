@@ -1079,7 +1079,7 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 
 ## JSON Path List Indexing
 ![Alt text](images/json_path_first.png "apis") 
-![Alt text](images/json_path_last.png "apis")
+![Alt text](images/json_path_last_element.png "apis")
 ![Alt text](images/json_path_interval.png "apis")
 
 # JSON PATH Use case – Kubernetes
