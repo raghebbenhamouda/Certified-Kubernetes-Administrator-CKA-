@@ -1051,6 +1051,12 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 - Check the kube-proxy configuration file reference and contents
 - check the CNI provider configured on the cluster
 
+# JSON Path
+- It's a `Query` language that help you query data represented in `JSON` ou `YAML` format
+- Just like SQL is a query language for MySql databases
+- Anything inside the pair of curly braces is a dictionary
+- The top level dictonary of a JSON file has no name is known as the root element of a JSON documenet
+
 # Useful bookmarks
 
 - [Create an object (pods, deployments...)](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-command/#how-to-create-objects)
