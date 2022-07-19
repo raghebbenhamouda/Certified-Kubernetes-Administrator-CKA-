@@ -1073,6 +1073,16 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 ## JSON Path Criteria
 ![Alt text](images/json_path_criteria.png "apis") 
 
+## JSON Path Wildcard
+![Alt text](images/json_path_wildcard.png "apis") 
+- A star wildcard within a dictionary means all or any property within a dictionary
+
+## JSON Path List Indexing
+![Alt text](images/json_path_first.png "apis") 
+![Alt text](images/json_path_last.png "apis")
+![Alt text](images/json_path_interval.png "apis")
+
+
 # Useful bookmarks
 
 - [Create an object (pods, deployments...)](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-command/#how-to-create-objects)
