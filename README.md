@@ -1071,7 +1071,7 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 ![Alt text](images/json_path_array_dict.png "apis") 
 
 ## JSON Path Criteria
-![Alt text](images/jjson_path_criteria.png "apis") 
+![Alt text](images/json_path_criteria.png "apis") 
 
 # Useful bookmarks
 
