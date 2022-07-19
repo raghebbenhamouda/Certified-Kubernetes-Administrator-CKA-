@@ -1082,6 +1082,19 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 ![Alt text](images/json_path_last.png "apis")
 ![Alt text](images/json_path_interval.png "apis")
 
+# JSON PATH Use case – Kubernetes
+## Why JSON Path 
+- In a prduction cluster we have thousnd of resources within a cluster 
+- Viewing details by going through 1000 of this resources with just kubectl will be overwhelming
+- thats why kubectl support a JSON path option that makes filtering data across data sets using complex criteria
+- With JSON Path queries we can filter and format the output of a kubectl command as we like 
+
+## JSON Path with Kubectl
+![Alt text](images/json_kubectl.png "apis") </br>
+### Examples
+![Alt text](images/json_examples.png "apis")</br>
+### Loops -Range
+![Alt text](images/json_loops.png "apis")
 
 # Useful bookmarks
 
