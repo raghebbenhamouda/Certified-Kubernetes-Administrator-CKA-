@@ -1052,10 +1052,26 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 - check the CNI provider configured on the cluster
 
 # JSON Path
-- It's a `Query` language that help you query data represented in `JSON` ou `YAML` format
-- Just like SQL is a query language for MySql databases
+
+- It's a `Query` language that help you **query data** represented in `JSON` ou `YAML` format
+- Just like `SQL` is a query language for `MySql databases`
+
+## JSON Path Dictionary
+![Alt text](images/json_path_dict.png "apis") 
 - Anything inside the pair of curly braces is a dictionary
-- The top level dictonary of a JSON file has no name is known as the root element of a JSON documenet
+- The **top level dictonary** of a JSON file that has no name is known as the `root element` of a JSON documenet
+- the `root element`is denoted by `$`
+- All results of a JSON path query is encapuslated within an **array**
+
+## JSON Path Lists
+![Alt text](images/json_path_array.png "apis") 
+- **No curly braces only square brackets**, the `root element`is an **array** denoted by a `$`
+
+## JSON Path Dictionary & Lists
+![Alt text](images/json_path_array_dict.png "apis") 
+
+## JSON Path Criteria
+![Alt text](images/jjson_path_criteria.png "apis") 
 
 # Useful bookmarks
 
