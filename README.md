@@ -432,7 +432,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 
 ## Cluster upgrade
 - It is not mandatory that all kubernetes components are all the same version
-- Elements cannot be at a **newer** version than the** kube-apiserver**
+- Elements cannot be at a **newer** version than the **kube-apiserver**
 - **controller-manager** and **kube-scheduler** can be **1 version behind**
 - **kubelet** and **kube-proxy** can be **2 versions behind**
 - **kubectl** can be one version **over** or **under**
@@ -508,7 +508,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
  #### Certificate Creation
  ![Alt text](images/certificate_creation.png "api")
 - Generating certificates is done with tools like **EasyRSA**, **OpenSSL** or **CFSSL**
-- First we generate a certificate for the CA, Going forward for all other certificates, we will use the CA provate key,to sign all of them.
+- First we generate a certificate for the CA, Going forward for all other certificates, we will use the CA provate key to sign all of them.
 - Getting a certificate has 3 steps: 
 	- **1:** generating the certificat(generating a private key)
 	- **2:** generating a signing request(using the private key)
