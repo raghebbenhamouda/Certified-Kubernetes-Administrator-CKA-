@@ -514,12 +514,14 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 	- **2:** generating a signing request(using the private key)
 	-  **3:** signing the certificate(using the private key of the CA)
 - Add values to the CSR to add the **user certificate to certain groups(the user will get the group permissions after the certificate generation)**, like the **administrators group**
+- Similarly, the `nodes` must be added to a group named `system nodes`.
+- The `CN` is the name that `kubectl client` authenticates with when you run the `kubectl command`. So in the `audit logs` and elsewhere, this is the name that you will see.
 - You can add these certificates to a **Kubeconfig file** to avoid passing them as values to every request
-- Any user requests go through the kube-apiserver and need to authenticate against it
-- the kube-apiserver certificate needs to accept any name that the kube-apiserver will be referred as: the IP, the local name, or the fully qualified domain name 
-- Kubelet crtificates are named after the node they run on
+- Any user request go through the kube-apiserver and need to authenticate against it
+- the `kube-apiserver` certificate needs to accept any name that the kube-apiserver will be referred as: **the IP, the local name, or the fully qualified domain name **
+- Kubelet certificates are named after the node they run on
 ![Alt text](images/kube_apiserver_certificates.png "api")
-- Add the `CA certificate`, `generated certificate` and the `private key`  to the file inside `etc/kubernetes/manifests/`of each `commponents``
+- Add the `CA certificate`, `generated certificate` and the `private key`  to the file inside `etc/kubernetes/manifests/`of each `commponents`
 - **Certificates can be viewed on the cluster on the locations specified on the kube-apiserver pod definition file (if it was set up with kubeadm), generally /etc/kubernetes/manifests/kube-apiserver.yaml**
 
 ## View Certificate Details
@@ -616,7 +618,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - `Service accounts` are for programs to access API resources like prometheus pulling performance metrics from the Kubernetes API
 - ServiceAccounts use a token to access the cluster
 - The token is created when the ServiceAccount is created and is stored as a secret
-- **if the application is hosted on the k8s cluster**: Secrets for ServiceAccounts can be automatically mounted  as a volume inside the pod to be used by applications, no need to create a **service accounts** 
+- **If the application is hosted on the k8s cluster**: Secrets for ServiceAccounts can be automatically mounted  as a volume inside the pod to be used by applications, no need to create a **service accounts** 
 - That way, the token to access the Kubernetes API is already placed inside the pod and can be easily read by the application.
 - Each namespace has its default service account named **default**
 - When a pod is created, The **default service account** and its **token** **are automatically mounted to that pod as a volume mount**
