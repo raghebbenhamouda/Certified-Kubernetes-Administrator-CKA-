@@ -848,7 +848,7 @@ As of now, the **blue** pod has no idea where the address `10.244.2.2` is becaus
 - If we have one `router` in our network and **point all hosts** to use that as the `default gateway`
 - The **individual** virtual networks we created with the address `10.244.1.0/24` on each node now form a **single large network** with the address 10.244.0.0/16`
 
-==> We performed a number of **manual steps** to get the environment ready. We then wrote a `script` that can be run for each container that performs the necessary steps required to connect each container to the network. So how do we **run the script automatically** when a port is created on Kubernetes?
+==> We performed a number of **manual steps** to get the environment ready. We then wrote a `script` that can be run for each container that performs the necessary steps required to connect each container to the network. So how do we **run the script automatically** when a pod is created on Kubernetes?
 ### Solution: CNI
 ![Alt text](images/cni_pod_netwroking.png "apis") 
 - `CNI` tells Kubernetes that this is how you should call a script as soon as you create a container
