@@ -1102,6 +1102,11 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 ![Alt text](images/json_path_custom_columns.png "apis")
 ### JSON Path for Sort
 ![Alt text](images/json_path_sort.png "apis")
+### JSON Path with jq Command
+![Alt text](images/jq.png "apis")
+Example: `k get nodes -o json | jq -c 'paths' | grep type | grep -v 'metadat' `
+- `jq -c 'paths'` : will list all the paths inside the json file
+- `grep -v 'metadata' `: will exclude metadata word from the search
 
 
 # Useful bookmarks
