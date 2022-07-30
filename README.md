@@ -558,6 +558,7 @@ The `ETCD Cluster` and `CoreDNS` servers have their **own** versions as they are
 - Certificates can be specified either as a **file path** or as a **base64 data string**
 
 ## API groups
+To get the name of a resource we use : `kubectl api-resources`
 ### API Groups
 ![Alt text](images/groups.png "api")
  The kubernetes API is grouped into multiple such groups based on thier purpose. Such as one for `APIs`, one for `healthz`, `metrics` and `logs` etc.
