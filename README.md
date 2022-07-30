@@ -1097,6 +1097,11 @@ Let's troubleshoot a **two tier application** that has a web and a database serv
 ![Alt text](images/json_examples.png "apis")</br>
 ### Loops -Range
 ![Alt text](images/json_loops.png "apis")
+### JSON Path for Custom Columns 
+![Alt text](images/json_path_custom_column.png "apis")
+### JSON Path for Sort
+![Alt text](images/json_path_sort.png "apis")
+
 
 # Useful bookmarks
 
