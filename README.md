@@ -787,7 +787,7 @@ In this section we will see how `to configure a host as a DNS server` [CoreDNS](
 - Docker containers have their own `network namespace`(one network namespace for each container)
 - We have many options for docker networking:
  	- `none`: the container is not attached to any network 
- 	- `host network`:the container is attached to the **host’s network**(there is no network isolation between the host and the container)
+ 	- `host network`:the container is attached to the **host’s network**(there is no network isolation between the host and the container and no need to do port mapping the container will be availble on the host)
  	-  `Bridge`: an i**nternal private network** is created which the docker host and containers attach to. The network has an address `172.17.0.0`
 by default and each device connecting to this network get their own internal private network addresson this network
 ![Alt text](images/bridge_network.png "apis")
@@ -796,7 +796,7 @@ by default and each device connecting to this network get their own internal pri
  	-   Creates a **pair of interfaces**
  	-   Attaches one end to t**he container** and another end to the bridge network
 
-- We can map host ports to container ports to make program available from outside the docker host
+- In case of **bridge network**: e can map host ports to container ports to make program available from outside the docker host
 
 ## Container Networking Interface
 ![Alt text](images/cni.png "apis")
